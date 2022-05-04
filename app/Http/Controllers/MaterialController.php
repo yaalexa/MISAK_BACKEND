@@ -40,7 +40,7 @@ class MaterialController extends Controller
         ]); 
        // if(!$validar ->fails()){
             $material = new Material();
-           /* 
+           
             $image="";
             if($request->hasFile('img')){
             $image=$request->file('img')->store('image','public');
@@ -54,14 +54,14 @@ class MaterialController extends Controller
             $file=Null;
             }
             $material->pdf = $file;
-            $material->img = $image;*/
+            $material->img = $image;
             $material->name = $request ->name;
             $material->isbn = $request ->isbn;
             $material->year = $request ->year;
             $material->num_pages = $request ->num_pages;
             $material->priority = $request ->priority;
-            $material->pdf = $request ->pdf;
-            $material->img = $request ->img;
+            //$material->pdf = $request ->pdf;
+            //$material->img = $request ->img;
             /*$material->type_material_id = $request ->type_material_id;
             $material->editorial_id = $request ->editorial_id;
             $material->area_id = $request ->area_id;*/
