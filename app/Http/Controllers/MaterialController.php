@@ -47,7 +47,7 @@ class MaterialController extends Controller
             }else{
             $image=Null;
             }
-
+ 
             $file="";
             if($request->hasFile('pdf')){
                 $file=$request->file('pdf')->store('file','public');
