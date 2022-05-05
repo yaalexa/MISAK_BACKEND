@@ -82,7 +82,7 @@ class MaterialController extends Controller
             ]);
         }
     }
-
+   
     /**
      * Display the specified resource.
      *
