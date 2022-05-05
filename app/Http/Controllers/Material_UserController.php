@@ -46,7 +46,7 @@ class Material_UserController extends Controller
             $material_user->date_download = $request ->date_download;
             $material_user->material_id = $request ->material_id;
             $material_user->users_id = $request ->users_id;
-
+ 
             $material_user->save();
 
             return response()->json([
