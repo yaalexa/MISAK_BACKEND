@@ -89,8 +89,18 @@ class MaterialController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show( Request $request, $id)
+    public function show( $id)
     {
+        
+        $libros = Material::where('id',$id)->get();
+       // $libros = Material::filtroPorTituloYAutor( $filtro );
+
+        
+        return response()->json([
+            'res'=> true,
+            'material' => $libros 
+        ]);
+        /*
         $material = Material::where('id',$id)
         ->first();
         if (isset($material)){
@@ -103,7 +113,7 @@ class MaterialController extends Controller
                 'res'=> false,
                 'mensaje' => 'registro no encontrado' 
             ]);
-        }
+        }*/
     }
 
     /**
