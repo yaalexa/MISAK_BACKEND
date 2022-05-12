@@ -61,12 +61,12 @@ class MaterialController extends Controller
             $material->year = $request ->year;
             $material->num_pages = $request ->num_pages;
             $material->priority = $request ->priority;
-            //$material->pdf = $request ->pdf;
-            //$material->img = $request ->img;
-            /*$material->type_material_id = $request ->type_material_id;
+            $material->pdf = $request ->pdf;
+            $material->img = $request ->img;
+            $material->type_material_id = $request ->type_material_id;
             $material->editorial_id = $request ->editorial_id;
-            $material->area_id = $request ->area_id;*/
-           // $material->save();
+            $material->area_id = $request ->area_id;
+            $material->save();
         $result=$material->save();
         if($result){
             return response()->json([
