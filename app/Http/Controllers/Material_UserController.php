@@ -7,7 +7,7 @@ use App\Models\Material_User;
 use Illuminate\Validation\Rules\Exist;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\DB; 
 class Material_UserController extends Controller
 {
     /**
@@ -69,19 +69,13 @@ class Material_UserController extends Controller
      */
     public function show($id)
     {
-        $material_user = Material_User::where('id',$id)
-        ->first();
-        if (isset($material_user)){
-            return response()->json([
-                'res'=> true,
-                'material' => $material_user
-            ]);
-        }else{
-            return response()->json([
-                'res'=> false,
-                'mensaje' => 'registro no encontrado' 
-            ]);
-        }
+        
+        $author_material = DB::table('authors')
+        ->join('author__materials','author__materials.author_id','=','authors.id')
+        ->where('author__materials.material_id','=',$id)
+        ->select('author__materials.id','authors.name')
+        ->get();
+        return $author_material;
     }
 
     /**

@@ -94,7 +94,6 @@ class MaterialController extends Controller
         
         $libros = Material::where('id',$id)->get();
        // $libros = Material::filtroPorTituloYAutor( $filtro );
-
         
         return response()->json([
             'res'=> true,
@@ -133,6 +132,9 @@ class MaterialController extends Controller
             'priority' => 'required',
             'pdf' => 'required',
             'img' => 'required',
+            'type_material_id' => 'required',
+            'editorial_id' => 'required',
+            'area_id' => 'required'
            
         ]);
 
@@ -146,6 +148,9 @@ class MaterialController extends Controller
                 $material->num_pages = $request ->num_pages;
                 $material->img = $request ->img;
                 $material->pdf = $request ->pdf;
+                $material->type_material_id = $request->type_material_id;
+                $material->editorial_id = $request->editorial_id;
+                $material->area_id = $request->area_id;
                 $material->save();
                  return response()->json([
                 'res'=> true,
