@@ -21,7 +21,8 @@ class CreateUsersTable extends Migration
             $table->string('document_number');
             $table->string('certificate_misak');
             $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
+
+            $table->timestamp('email_verified_at');
             $table->string('password');
             $table->unsignedBigInteger('rol_id');
             $table->foreign('rol_id')->references('id')->on('rols')->onDelete('cascade')->onUpdate('cascade');

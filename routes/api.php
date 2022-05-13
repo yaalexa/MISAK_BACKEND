@@ -12,6 +12,9 @@ use App\Http\Controllers\Type_MaterialController;
 use App\Http\Controllers\RolController;
 use App\Http\Controllers\Author_MaterialController;
 use App\Http\Controllers\Material_UserController;
+use App\Http\Controllers\Reporters_inicialController;
+use App\Http\Controllers\Reporters_visualizacionController;
+
 
 
 //use App\Http\Controllers\AuthorController;
@@ -109,3 +112,8 @@ Route::get('material__users/{id}',[Material_UserController::class,'show']);
 Route::post('material__users',[Material_UserController::class,'store']);
 Route::put('material__users/{id}',[Material_UserController::class,'update']);
 Route::delete('material__users/{id}',[Material_UserController::class,'destroy']);
+
+//Reporte inicial
+Route::get('/Reportes',[Reporters_inicialController::class,'index']);
+//Reporte de visualizacion
+Route::get('/Reportes_Visualizacion',[Reporters_visualizacionController::class,'index']);

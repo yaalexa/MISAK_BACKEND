@@ -18,6 +18,6 @@ class Area extends Model
     ];
      // relacion de uno a muchos 
      public function material(){
-        return $this->BelongsTo('App\Material','area_id','id');
+        return $this->BelongsTo('App\Material','area_id','id_users');
     }
 }

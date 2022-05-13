@@ -23,13 +23,13 @@ class CreateMaterialsTable extends Migration
             $table->string('pdf');
             $table->string('img');
 
-            $table->unsignedBigInteger('type_material_id')->nullable();
+            $table->unsignedBigInteger('type_material_id');
             $table->foreign('type_material_id')->references('id')->on('type__materials')->onDelete('cascade')->onUpdate('cascade');
 
-            $table->unsignedBigInteger('editorial_id')->nullable();
+            $table->unsignedBigInteger('editorial_id');
             $table->foreign('editorial_id')->references('id')->on('editorials')->onDelete('cascade')->onUpdate('cascade');
 
-            $table->unsignedBigInteger('area_id')->nullable();
+            $table->unsignedBigInteger('area_id');
             $table->foreign('area_id')->references('id')->on('areas')->onDelete('cascade')->onUpdate('cascade');
 
 

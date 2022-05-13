@@ -16,7 +16,7 @@ class Roltable extends Seeder
     public function run()
     {
         DB::table('rols')->insert([
-            'name' => 'administrador',
+            'name' => 'comunero',
         ]);
     }
 }
