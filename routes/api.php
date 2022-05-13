@@ -12,7 +12,7 @@ use App\Http\Controllers\Type_MaterialController;
 use App\Http\Controllers\RolController;
 use App\Http\Controllers\Author_MaterialController;
 use App\Http\Controllers\Material_UserController;
-
+use App\Models\Author;
 
 //use App\Http\Controllers\AuthorController;
 
@@ -95,7 +95,8 @@ Route::get('author_materials/{id}',[Author_MaterialController::class,'show']);
 Route::post('author_materials',[Author_MaterialController::class,'store']);
 Route::put('author_materials/{id}',[Author_MaterialController::class,'update']);
 Route::delete('author_materials/{id}',[Author_MaterialController::class,'destroy']);
-
+//Route::get('mostrarauthor_materials',[Author_MaterialController::class,'mostrarautormaterial']);
+Route::get('mostrarautormaterial',[Author_MaterialController::class,'mostrarautormaterial']);
 //rutas de material
 Route::get('/materials',[MaterialController::class,'index']);
 Route::get('/materials/{id}',[MaterialController::class,'show']);
