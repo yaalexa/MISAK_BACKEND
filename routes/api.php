@@ -63,7 +63,7 @@ Route::delete('users/{id}',[UserController::class,'destroy']); // con esta ruta 
 
 Route::get('editorials',[EditorialController::class,'index']); // con esta ruta puedo ver todas las editoriales
 Route::post('editorials',[EditorialController::class,'store']); //con esta ruta puedo registrar una nueva editorial
-Route::get('editorials/{id}',[EditorialController::class,'show']); // con esta ruta puedo buscar una editorial especifica
+Route::get('editorials/{name}',[EditorialController::class,'show']); // con esta ruta puedo buscar una editorial especifica
 Route::put('editorials/{id}',[EditorialController::class,'update']); // con esta ruta puedo actualizar una editorial
 Route::delete('editorials/{id}',[EditorialController::class,'destroy']); // con esta ruta puedo eliminar una editorial
 
@@ -91,7 +91,7 @@ Route::delete('rols/{id}',[RolController::class,'destroy']);
 
 //rutas de tipos de autor material
 Route::get('author_materials',[Author_MaterialController::class,'index']);
-Route::get('author_materials/{id}',[Author_MaterialController::class,'show']);
+Route::get('author_materials/{name}',[Author_MaterialController::class,'show']);
 Route::post('author_materials',[Author_MaterialController::class,'store']);
 Route::put('author_materials/{id}',[Author_MaterialController::class,'update']);
 Route::delete('author_materials/{id}',[Author_MaterialController::class,'destroy']);

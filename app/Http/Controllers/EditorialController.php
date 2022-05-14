@@ -34,19 +34,19 @@ class EditorialController extends Controller
         ]);
         if(!$validar ->fails()){
             $editorial = new Editorial();
-            
+
             $editorial->name = $request ->name;
 
             $editorial->save();
 
             return response()->json([
                 'res'=> true,
-                'mensaje' => 'editorial guardada' 
+                'mensaje' => 'editorial guardada'
             ]);
         }else{
             return response()->json([
                 'res'=> false,
-                'mensaje' => 'error entrada duplicada' 
+                'mensaje' => 'error entrada duplicada'
             ]);
         }
     }
@@ -57,19 +57,20 @@ class EditorialController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show( Request $request, $name)
     {
-        $editorial = Editorial::where('id',$id)
-        ->first();
-        if (isset($editorial)){
+
+        $material = Editorial::where('name','like','%'.$name.'%')
+        ->get();
+        if (isset($material)){
             return response()->json([
                 'res'=> true,
-                'editorial' => $editorial 
+                'material' => $material
             ]);
         }else{
             return response()->json([
                 'res'=> false,
-                'mensaje' => 'registro no encontrado' 
+                'mensaje' => 'registro no encontrado'
             ]);
         }
     }
@@ -95,7 +96,7 @@ class EditorialController extends Controller
                 $editorial->save();
                  return response()->json([
                 'res'=> true,
-                'mensaje' => 'Editorial actualizada' 
+                'mensaje' => 'Editorial actualizada'
             ]);
 
             }else{

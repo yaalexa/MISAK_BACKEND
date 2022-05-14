@@ -33,24 +33,24 @@ class AuthorController extends Controller
             'name' => 'required',
             'address' => 'required',
             'phone' => 'required'
-        ]); 
+        ]);
         if(!$validar ->fails()){
             $author = new Author();
-            
+
             $author->name = $request ->name;
             $author->address = $request ->address;
             $author->phone = $request ->phone;
-            
+
             $author->save();
 
             return response()->json([
                 'res'=> true,
-                'mensaje' => 'registro guardado' 
+                'mensaje' => 'registro guardado'
             ]);
         }else{
             return response()->json([
                 'res'=> false,
-                'mensaje' => 'error entrada duplicada' 
+                'mensaje' => 'error entrada duplicada'
             ]);
         }
     }
@@ -61,19 +61,20 @@ class AuthorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show( Request $request, $name)
     {
-        $author = Author::where('id',$id)
-        ->first();
-        if (isset($author)){
+
+        $material = Author::where('name','like','%'.$name.'%')
+        ->get();
+        if (isset($material)){
             return response()->json([
                 'res'=> true,
-                'autor' => $author
+                'material' => $material
             ]);
         }else{
             return response()->json([
                 'res'=> false,
-                'mensaje' => 'registro no encontrado' 
+                'mensaje' => 'registro no encontrado'
             ]);
         }
     }
@@ -103,7 +104,7 @@ class AuthorController extends Controller
                 $author->save();
                  return response()->json([
                 'res'=> true,
-                'mensaje' => 'autor actualizado' 
+                'mensaje' => 'autor actualizado'
             ]);
 
             }else{
