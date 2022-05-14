@@ -17,7 +17,7 @@ class MaterialController extends Controller
     public function index()
     {
         $material = Material::all();
-        return $material;   
+        return $material;
 
     }
 
@@ -37,17 +37,17 @@ class MaterialController extends Controller
             'priority' => 'required',
             'pdf' => 'required',
             'img' => 'required'
-        ]); 
+        ]);
        // if(!$validar ->fails()){
             $material = new Material();
-           
+
             $image="";
             if($request->hasFile('img')){
             $image=$request->file('img')->store('image','public');
             }else{
             $image=Null;
             }
- 
+
             $file="";
             if($request->hasFile('pdf')){
                 $file=$request->file('pdf')->store('file','public');
@@ -82,37 +82,29 @@ class MaterialController extends Controller
             ]);
         }
     }
-   
+
     /**
      * Display the specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show( $id)
+    public function show( Request $request, $name)
     {
-        
-        $libros = Material::where('id',$id)->get();
-       // $libros = Material::filtroPorTituloYAutor( $filtro );
-        
-        return response()->json([
-            'res'=> true,
-            'material' => $libros 
-        ]);
-        /*
-        $material = Material::where('id',$id)
-        ->first();
+
+        $material = Material::where('name','like','%'.$name.'%')
+        ->get();
         if (isset($material)){
             return response()->json([
                 'res'=> true,
-                'material' => $material 
+                'material' => $material
             ]);
         }else{
             return response()->json([
                 'res'=> false,
-                'mensaje' => 'registro no encontrado' 
+                'mensaje' => 'registro no encontrado'
             ]);
-        }*/
+        }
     }
 
     /**
@@ -135,7 +127,7 @@ class MaterialController extends Controller
             'type_material_id' => 'required',
             'editorial_id' => 'required',
             'area_id' => 'required'
-           
+
         ]);
 
         if(!$validar->fails()){
@@ -154,7 +146,7 @@ class MaterialController extends Controller
                 $material->save();
                  return response()->json([
                 'res'=> true,
-                'mensaje' => 'material actualizado' 
+                'mensaje' => 'material actualizado'
             ]);
 
             }else{

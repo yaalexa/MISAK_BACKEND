@@ -38,11 +38,11 @@ Route::put('areas/{id}',[AreaController::class,'update']); // con esta ruta pued
 Route::delete('areas/{id}',[AreaController::class,'destroy']); // con esta ruta puedo eliminar un area
 
 //rutas de author
-Route::get('authors',[AuthorController::class,'index']); // con esta ruta puedo ver todos los autores  
+Route::get('authors',[AuthorController::class,'index']); // con esta ruta puedo ver todos los autores
 Route::post('authors',[AuthorController::class,'store']); //con esta ruta puedo registrar una nuevo autor
 Route::get('authors/{id}',[AuthorController::class,'show']); // con esta ruta puedo buscar un author especifico
 Route::put('authors/{id}',[AuthorController::class,'update']); // con esta ruta puedo actualizar un autor
-Route::delete('authors/{id}',[AuthorController::class,'destroy']); // con esta ruta puedo eliminar un autor      
+Route::delete('authors/{id}',[AuthorController::class,'destroy']); // con esta ruta puedo eliminar un autor
 
 //rutas de User
 Route::post('register', [UserController::class, 'register']);
@@ -56,7 +56,7 @@ Route::get('users',[UserController::class,'index']); // con esta ruta puedo ver 
 Route::post('users',[UserController::class,'store']); //con esta ruta puedo registrar una nuevo usuario
 Route::get('users/{id}',[UserController::class,'show']); // con esta ruta puedo buscar un usuario especifico
 Route::put('users/{id}',[UserController::class,'update']); // con esta ruta puedo actualizar un usuario
-Route::delete('users/{id}',[UserController::class,'destroy']); // con esta ruta puedo eliminar un usuario 
+Route::delete('users/{id}',[UserController::class,'destroy']); // con esta ruta puedo eliminar un usuario
 
 
 //de esta forma nos genera todas las rutas
@@ -68,10 +68,10 @@ Route::put('editorials/{id}',[EditorialController::class,'update']); // con esta
 Route::delete('editorials/{id}',[EditorialController::class,'destroy']); // con esta ruta puedo eliminar una editorial
 
 //rutas de Nivel de educacion
-Route::get('educational_levels',[Educational_LevelController::class,'index']); 
-Route::post('educational_levels',[Educational_LevelController::class,'store']); 
-Route::get('educational_levels/{id}',[Educational_LevelController::class,'show']); 
-Route::put('educational_levels/{id}',[Educational_LevelController::class,'update']); 
+Route::get('educational_levels',[Educational_LevelController::class,'index']);
+Route::post('educational_levels',[Educational_LevelController::class,'store']);
+Route::get('educational_levels/{id}',[Educational_LevelController::class,'show']);
+Route::put('educational_levels/{id}',[Educational_LevelController::class,'update']);
 Route::delete('educational_levels/{id}',[Educational_LevelController::class,'destroy']);
 
 //rutas de tipos de material
