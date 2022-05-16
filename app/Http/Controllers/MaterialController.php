@@ -61,11 +61,9 @@ class MaterialController extends Controller
             $material->year = $request ->year;
             $material->num_pages = $request ->num_pages;
             $material->priority = $request ->priority;
-            //$material->pdf = $request ->pdf;
-            //$material->img = $request ->img;
-            /*$material->type_material_id = $request ->type_material_id;
+            $material->type_material_id = $request ->type_material_id;
             $material->editorial_id = $request ->editorial_id;
-            $material->area_id = $request ->area_id;*/
+            $material->area_id = $request ->area_id;
            // $material->save();
         $result=$material->save();
         if($result){
@@ -89,30 +87,22 @@ class MaterialController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show( $id)
+    public function show( Request $request, $name)
     {
-        
-        $libros = Material::where('id',$id)->get();
-       // $libros = Material::filtroPorTituloYAutor( $filtro );
-        
-        return response()->json([
-            'res'=> true,
-            'material' => $libros 
-        ]);
-        /*
-        $material = Material::where('id',$id)
-        ->first();
+
+        $material = Material::where('name','like','%'.$name.'%')
+        ->get();
         if (isset($material)){
             return response()->json([
                 'res'=> true,
-                'material' => $material 
+                'material' => $material
             ]);
         }else{
             return response()->json([
                 'res'=> false,
-                'mensaje' => 'registro no encontrado' 
+                'mensaje' => 'registro no encontrado'
             ]);
-        }*/
+        }
     }
 
     /**
