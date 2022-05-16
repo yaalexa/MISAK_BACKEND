@@ -19,8 +19,8 @@ class UserController extends Controller
             'full_name' => 'required',
             'email' => 'required|email|unique:users',
             'password' => 'required|confirmed',
-            'rol_id' => 'required' , 
-                   
+            'rol_id' => 'required' ,
+
         ]);
 
         $user = new User();
@@ -33,12 +33,12 @@ class UserController extends Controller
         $user->password = Hash::make($request->password);
         $user->rol_id = $request->rol_id;
         $user->save();
-        
+
 
         return response()->json([
             "status" => 1,
             "msg" => "¡Registro de usuario exitoso!",
-        ]);    
+        ]);
     }
 
 
@@ -61,20 +61,22 @@ class UserController extends Controller
                     "status" => 1,
                     "msg" => "usuario correctamente logeado",
                     "access_token" => $token,
-                    "usr_id" => $user->id
-                ]);        
+                    "usr_id" => $user->id,
+                    "rll_id" => $user->rol_id
+
+                ]);
             }else{
                 return response()->json([
                     "status" => 0,
                     "msg" => "password incorrecto",
-                ]);    
+                ]);
             }
 
         }else{
             return response()->json([
                 "status" => 0,
                 "msg" => "Usuario no registrado",
-            ]);  
+            ]);
         }
     }
 
@@ -83,16 +85,16 @@ class UserController extends Controller
             "status" => 0,
             "msg" => "Acerca del perfil de usuario",
             "data" => auth()->user()
-        ]); 
+        ]);
     }
- 
+
     public function logout() {
         auth()->user()->tokens()->delete();
-        
+
         return response()->json([
             "status" => 1,
-            "msg" => "Cierre de Sesión",            
-        ]); 
+            "msg" => "Cierre de Sesión",
+        ]);
     }
     public function show($id)
     {
@@ -101,12 +103,12 @@ class UserController extends Controller
         if (isset($user)){
             return response()->json([
                 'res'=> true,
-                'user' => $user 
+                'user' => $user
             ]);
         }else{
             return response()->json([
                 'res'=> false,
-                'mensaje' => 'registro no encontrado' 
+                'mensaje' => 'registro no encontrado'
             ]);
         }
     }
@@ -150,7 +152,7 @@ class UserController extends Controller
                 $user->save();
                  return response()->json([
                 'res'=> true,
-                'mensaje' => 'Usuario actualizado' 
+                'mensaje' => 'Usuario actualizado'
             ]);
 
             }else{
