@@ -34,45 +34,45 @@ class Type_MaterialController extends Controller
         ]);
         if(!$validar ->fails()){
             $type_material = new Type_Material();
-            
+
             $type_material->name = $request ->name;
 
             $type_material->save();
 
             return response()->json([
                 'res'=> true,
-                'mensaje' => 'tipo de material guardado' 
+                'mensaje' => 'tipo de material guardado'
             ]);
         }else{
             return response()->json([
                 'res'=> false,
-                'mensaje' => 'error entrada duplicada' 
+                'mensaje' => 'error entrada duplicada'
             ]);
         }
     }
-    
+
     /**
      * Display the specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show( Request $request, $name)
     {
-        $type_material = Type_Material::where('id',$id)
-        ->first();
-        if (isset($type_material)){
+
+        $material = Type_Material::where('name','like','%'.$name.'%')
+        ->get();
+        if (isset($material)){
             return response()->json([
                 'res'=> true,
-                'type_material' => $type_material 
+                'material' => $material
             ]);
         }else{
             return response()->json([
                 'res'=> false,
-                'mensaje' => 'registro no encontrado' 
+                'mensaje' => 'registro no encontrado'
             ]);
         }
-
     }
 
     /**
@@ -96,7 +96,7 @@ class Type_MaterialController extends Controller
                 $type_material->save();
                  return response()->json([
                 'res'=> true,
-                'mensaje' => 'tipo de material actualizado' 
+                'mensaje' => 'tipo de material actualizado'
             ]);
 
             }else{
@@ -133,4 +133,3 @@ class Type_MaterialController extends Controller
         }
     }
 }
- 

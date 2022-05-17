@@ -35,7 +35,7 @@ class Author_MaterialController extends Controller
         ]);
         if(!$validar ->fails()){
             $author_material = new Author_material();
-            
+
             $author_material->author_id = $request ->author_id;
             $author_material->material_id = $request ->material_id;
 
@@ -43,12 +43,12 @@ class Author_MaterialController extends Controller
 
             return response()->json([
                 'res'=> true,
-                'mensaje' => 'Guardado con exito' 
+                'mensaje' => 'Guardado con exito'
             ]);
         }else{
             return response()->json([
                 'res'=> false,
-                'mensaje' => 'error entrada duplicada' 
+                'mensaje' => 'error entrada duplicada'
             ]);
         }
     }
@@ -66,12 +66,12 @@ class Author_MaterialController extends Controller
         if (isset($author_material)){
             return response()->json([
                 'res'=> true,
-                'author_material' => $author_material 
+                'author_material' => $author_material
             ]);
         }else{
             return response()->json([
                 'res'=> false,
-                'mensaje' => 'registro no encontrado' 
+                'mensaje' => 'registro no encontrado'
             ]);
         }
     }
@@ -99,7 +99,7 @@ class Author_MaterialController extends Controller
                 $author_material->save();
                  return response()->json([
                 'res'=> true,
-                'mensaje' => 'Se actualizado el registro' 
+                'mensaje' => 'Se actualizado el registro'
             ]);
 
             }else{
