@@ -54,22 +54,12 @@ class AreaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show( Request $request, $name)
+    public function show( $id)
     {
+        $area = Area::where('id',$id)->get();
+       
+        return $area;
 
-        $material = Area::where('name','like','%'.$name.'%')
-        ->get();
-        if (isset($material)){
-            return response()->json([
-                'res'=> true,
-                'material' => $material
-            ]);
-        }else{
-            return response()->json([
-                'res'=> false,
-                'mensaje' => 'registro no encontrado'
-            ]);
-        }
     }
 
     /**
