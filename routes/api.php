@@ -12,6 +12,7 @@ use App\Http\Controllers\Type_MaterialController;
 use App\Http\Controllers\RolController;
 use App\Http\Controllers\Author_MaterialController;
 use App\Http\Controllers\Material_UserController;
+use App\Http\Controllers\Material_EducationalController;
 
 
 //use App\Http\Controllers\AuthorController;
@@ -109,3 +110,10 @@ Route::get('material__users/{id}',[Material_UserController::class,'show']);
 Route::post('material__users',[Material_UserController::class,'store']);
 Route::put('material__users/{id}',[Material_UserController::class,'update']);
 Route::delete('material__users/{id}',[Material_UserController::class,'destroy']);
+
+//rutas de material educational level
+Route::get('material__educational_levels',[Material_EducationalController::class,'index']);
+Route::get('material__educational_levels/{id}',[Material_EducationalController::class,'show']);
+Route::post('material__educational_levels',[Material_EducationalController::class,'store']);
+Route::put('material__educational_levels/{id}',[Material_EducationalController::class,'update']);
+Route::delete('material__educational_levels/{id}',[Material_EducationalController::class,'destroy']);
