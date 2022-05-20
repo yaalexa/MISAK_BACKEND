@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Models\Author_Material;
 use Illuminate\Validation\Rules\Exist;
@@ -30,8 +30,8 @@ class Author_MaterialController extends Controller
     public function store(Request $request)
     {
         $validar= Validator::make($request->all(), [
-            'author_id'=> 'required|unique:author__materials',
-            'material_id'=> 'required|unique:author__materials'
+            'author_id'=> 'required',
+            'material_id'=> 'required'
         ]);
         if(!$validar ->fails()){
             $author_material = new Author_material();
@@ -61,19 +61,12 @@ class Author_MaterialController extends Controller
      */
     public function show($id)
     {
-        $author_material = Author_material::where('id',$id)
-        ->first();
-        if (isset($author_material)){
-            return response()->json([
-                'res'=> true,
-                'author_material' => $author_material 
-            ]);
-        }else{
-            return response()->json([
-                'res'=> false,
-                'mensaje' => 'registro no encontrado' 
-            ]);
-        }
+        $author_material = DB::table('authors')
+        ->join('author__materials','author__materials.author_id','=','authors.id')
+        ->where('author__materials.material_id','=',$id)
+        ->select('author__materials.id','authors.name')
+        ->get();
+        return $author_material;
     }
 
     /**
