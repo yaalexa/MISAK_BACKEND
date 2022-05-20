@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Material_User;
-use Illuminate\Validation\Rules\Exist;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rules\Exist;
 
 class Material_UserController extends Controller
 {
@@ -37,26 +37,26 @@ class Material_UserController extends Controller
             'date_download' => 'required',
             'material_id' => 'required',
             'users_id' => 'required'
-        ]); 
+        ]);
         if(!$validar ->fails()){
             $material_user = new Material_User();
-            
+
             $material_user->manejo_users = $request ->manejo_users;
             $material_user->detalle_material = $request ->detalle_material;
             $material_user->date_download = $request ->date_download;
             $material_user->material_id = $request ->material_id;
             $material_user->users_id = $request ->users_id;
- 
+
             $material_user->save();
 
             return response()->json([
                 'res'=> true,
-                'mensaje' => 'registro guardado' 
+                'mensaje' => 'registro guardado'
             ]);
         }else{
             return response()->json([
                 'res'=> false,
-                'mensaje' => 'error entrada duplicada' 
+                'mensaje' => 'error entrada duplicada'
             ]);
         }
     }
@@ -79,7 +79,7 @@ class Material_UserController extends Controller
         }else{
             return response()->json([
                 'res'=> false,
-                'mensaje' => 'registro no encontrado' 
+                'mensaje' => 'registro no encontrado'
             ]);
         }
     }
@@ -113,7 +113,7 @@ class Material_UserController extends Controller
                 $material->save();
                  return response()->json([
                 'res'=> true,
-                'mensaje' => 'material actualizado' 
+                'mensaje' => 'material actualizado'
             ]);
 
             }else{

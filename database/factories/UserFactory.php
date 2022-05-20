@@ -28,7 +28,7 @@ class UserFactory extends Factory
             'full_name' => $firstName . ' ' . $lastName,
             'document_type'=> Arr::random($array),
             'email' => $this->faker->unique()->safeEmail(),
-            'document_number' => $this->faker->random(8, true),
+            'document_number' => $this->faker->randomNumber(8, true),
             'certificate_misak' => $this->faker->randomNumber(5, true),
             'email_verified_at' => now(),
             'remember_token' => Str::random(10),

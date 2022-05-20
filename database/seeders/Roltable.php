@@ -21,5 +21,11 @@ class Roltable extends Seeder
         DB::table('rols')->insert([
             'name' => 'comunero',
         ]);
+        DB::table('rols')->insert([
+            'name' => 'estudiante',
+        ]);
+        DB::table('rols')->insert([
+            'name' => 'docente',
+        ]);
     }
 }

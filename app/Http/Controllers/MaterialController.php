@@ -73,6 +73,7 @@ class MaterialController extends Controller
                     'res'=> true,
                     'mensaje' => 'material guardado' ,
                     'ruta'=> url('storage/image/'.$material)
+
                 ]);
             }
          }else{
@@ -81,7 +82,7 @@ class MaterialController extends Controller
                 'mensaje' => 'error entrada duplicada' ,
                 'ruta' => null
             ]);
-        },
+        }
     }
 
     /**
