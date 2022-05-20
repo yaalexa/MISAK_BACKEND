@@ -64,18 +64,8 @@ class AuthorController extends Controller
     public function show($id)
     {
         $author = Author::where('id',$id)
-        ->first();
-        if (isset($author)){
-            return response()->json([
-                'res'=> true,
-                'autor' => $author
-            ]);
-        }else{
-            return response()->json([
-                'res'=> false,
-                'mensaje' => 'registro no encontrado' 
-            ]);
-        }
+        ->get();
+        return  $author;
     }
 
     /**

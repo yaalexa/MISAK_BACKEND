@@ -7,7 +7,7 @@ use App\Models\Material_User;
 use Illuminate\Validation\Rules\Exist;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\DB; 
 class Material_UserController extends Controller
 {
     /**
@@ -46,7 +46,7 @@ class Material_UserController extends Controller
             $material_user->date_download = $request ->date_download;
             $material_user->material_id = $request ->material_id;
             $material_user->users_id = $request ->users_id;
-
+ 
             $material_user->save();
 
             return response()->json([
@@ -69,19 +69,13 @@ class Material_UserController extends Controller
      */
     public function show($id)
     {
-        $material_user = Material_User::where('id',$id)
-        ->first();
-        if (isset($material_user)){
-            return response()->json([
-                'res'=> true,
-                'material' => $material_user
-            ]);
-        }else{
-            return response()->json([
-                'res'=> false,
-                'mensaje' => 'registro no encontrado' 
-            ]);
-        }
+        
+        $author_material = DB::table('authors')
+        ->join('author__materials','author__materials.author_id','=','authors.id')
+        ->where('author__materials.material_id','=',$id)
+        ->select('author__materials.id','authors.name')
+        ->get();
+        return $author_material;
     }
 
     /**
@@ -148,5 +142,17 @@ class Material_UserController extends Controller
                 'mensaje' => 'falla al elimar no se encontro registro'
             ]);
         }
+    }
+
+    public function visualizacion (){
+        $visualizacion=DB::table('material__users')
+        ->join('materials','material__users.material_id','=','materials.id')
+        ->where('material__users.detalle_material','=','visualizacion')
+       // ->groupBy('material__users.detalle_material','materials.name')
+        ->select('material__users.detalle_material','materials.name')
+        ->orderBy('material__users.detalle_material','desc')
+        ->get();
+    
+        return $visualizacion;
     }
 }

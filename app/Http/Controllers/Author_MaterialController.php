@@ -7,7 +7,6 @@ use App\Models\Author_Material;
 use Illuminate\Validation\Rules\Exist;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class Author_MaterialController extends Controller
 {
@@ -31,8 +30,8 @@ class Author_MaterialController extends Controller
     public function store(Request $request)
     {
         $validar= Validator::make($request->all(), [
-            'author_id'=> 'required',
-            'material_id'=> 'required'
+            'author_id'=> 'required|unique:author__materials',
+            'material_id'=> 'required|unique:author__materials'
         ]);
         if(!$validar ->fails()){
             $author_material = new Author_material();
@@ -62,13 +61,19 @@ class Author_MaterialController extends Controller
      */
     public function show($id)
     {
-        //$author_material= DB::select('SELECT authors.id, authors.name as material_id FROM authors, author__materials where authors.id=author__materials.id ');
-        $author_material = DB::table('authors')
-        ->join('author__materials','author__materials.author_id','=','authors.id')
-        ->where('author__materials.material_id','=',$id)
-        ->select('author__materials.id','authors.name')
-        ->get();
-        return $author_material;
+        $author_material = Author_material::where('id',$id)
+        ->first();
+        if (isset($author_material)){
+            return response()->json([
+                'res'=> true,
+                'author_material' => $author_material 
+            ]);
+        }else{
+            return response()->json([
+                'res'=> false,
+                'mensaje' => 'registro no encontrado' 
+            ]);
+        }
     }
 
     /**
@@ -130,23 +135,4 @@ class Author_MaterialController extends Controller
             ]);
         }
     }
-
-    public function mostrarautormaterial($id){
-        /*$mostrarautor = Author_Material::where('id',$id);*/
-       /* $mostrarautormaterial = DB::select('SELECT authors.id, authors.name FROM authors, author__materials where authors.id=author__materials.id and authors.id=1');
-        if (isset($mostrarautormaterial)){
-           return response()->json([
-                'res'=>true,
-                'Author_material'=>$mostrarautormaterial
-            ]);*/
-        $mostrarautormaterial = DB::table('authors')
-        ->join('author_materials','author_materials.author_id','authors.id')
-        ->where('author_materials.material_id','=',$id)
-        ->select('authors-id','authors.name')
-        ->get();
-        return $mostrarautormaterial;
-        }   
-
-    }
-
-
+}
