@@ -81,13 +81,28 @@ class MaterialController extends Controller
         }
     }
    
+     /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+
+    public function show( Request $request, $id)
+    {
+        $material = Material::where('id',$id)
+        ->get();
+        if (isset($material)){
+            return $material;
+        }
+    }
     /**
      * Display the specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show( Request $request, $name)
+    public function buscar( Request $request, $name)
     {
 
         $material = Material::where('name','like','%'.$name.'%')

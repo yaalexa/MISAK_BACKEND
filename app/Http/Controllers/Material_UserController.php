@@ -69,13 +69,19 @@ class Material_UserController extends Controller
      */
     public function show($id)
     {
-        
-        $author_material = DB::table('authors')
-        ->join('author__materials','author__materials.author_id','=','authors.id')
-        ->where('author__materials.material_id','=',$id)
-        ->select('author__materials.id','authors.name')
-        ->get();
-        return $author_material;
+        $material_user = Material_User::where('id',$id)
+        ->first();
+        if (isset($material_user)){
+            return response()->json([
+                'res'=> true,
+                'material' => $material_user
+            ]);
+        }else{
+            return response()->json([
+                'res'=> false,
+                'mensaje' => 'registro no encontrado' 
+            ]);
+        }
     }
 
     /**
@@ -142,5 +148,15 @@ class Material_UserController extends Controller
                 'mensaje' => 'falla al elimar no se encontro registro'
             ]);
         }
+    }
+    public function visualizacion (){
+        $visualizacion=DB::table('material__users')
+        ->join('materials','material__users.material_id','=','materials.id')
+        ->where('material__users.detalle_material','=','visualizacion')
+       // ->groupBy('material__users.detalle_material','materials.name')
+        ->select('material__users.detalle_material','materials.name')
+        ->orderBy('material__users.detalle_material','desc')
+        ->get();
+        return $visualizacion;
     }
 }
