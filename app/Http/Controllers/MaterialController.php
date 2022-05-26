@@ -203,3 +203,5 @@ class MaterialController extends Controller
         return response()->file($pathToFile);
     }
 }
+
+

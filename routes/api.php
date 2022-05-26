@@ -58,7 +58,6 @@ Route::get('users/{id}',[UserController::class,'show']); // con esta ruta puedo 
 Route::put('users/{id}',[UserController::class,'update']); // con esta ruta puedo actualizar un usuario
 Route::delete('users/{id}',[UserController::class,'destroy']); // con esta ruta puedo eliminar un usuario 
 
-
 //de esta forma nos genera todas las rutas
 
 Route::get('editorials',[EditorialController::class,'index']); // con esta ruta puedo ver todas las editoriales
@@ -119,3 +118,4 @@ Route::get('material__educational_levels/{id}',[Material_EducationalController::
 Route::post('material__educational_levels',[Material_EducationalController::class,'store']);
 Route::put('material__educational_levels/{id}',[Material_EducationalController::class,'update']);
 Route::delete('material__educational_levels/{id}',[Material_EducationalController::class,'destroy']);
+
