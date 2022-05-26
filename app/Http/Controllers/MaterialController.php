@@ -195,4 +195,11 @@ class MaterialController extends Controller
             ]);
         }
     }
+    public function download($uuid)
+    {
+        $book = Material::where('id', $uuid)->firstOrFail();
+        $pathToFile = storage_path("../storage/app/public/$book->pdf" );
+        //return response()->download($pathToFile);
+        return response()->file($pathToFile);
+    }
 }

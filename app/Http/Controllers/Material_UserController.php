@@ -151,12 +151,24 @@ class Material_UserController extends Controller
     }
     public function visualizacion (){
         $visualizacion=DB::table('material__users')
+        ->select('material__users.material_id as id','material__users.detalle_material','materials.name','materials.img', DB::raw('COUNT(material__users.material_id) as conteo'))
         ->join('materials','material__users.material_id','=','materials.id')
         ->where('material__users.detalle_material','=','visualizacion')
-       // ->groupBy('material__users.detalle_material','materials.name')
-        ->select('material__users.detalle_material','materials.name')
-        ->orderBy('material__users.detalle_material','desc')
+        ->groupBy('material__users.material_id','material__users.detalle_material','materials.name','materials.img')
+        ->orderBy('conteo','desc')
         ->get();
+        
+        return $visualizacion;
+    }
+    public function descarga (){
+        $visualizacion=DB::table('material__users')
+        ->select('material__users.material_id as id','material__users.detalle_material','materials.name','materials.img', DB::raw('COUNT(material__users.material_id) as conteo'))
+        ->join('materials','material__users.material_id','=','materials.id')
+        ->where('material__users.detalle_material','=','descarga')
+        ->groupBy('material__users.material_id','material__users.detalle_material','materials.name','materials.img')
+        ->orderBy('conteo','desc')
+        ->get();
+        
         return $visualizacion;
     }
 }

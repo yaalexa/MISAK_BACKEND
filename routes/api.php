@@ -103,13 +103,15 @@ Route::get('/buscar/{id}',[MaterialController::class,'buscar']);
 Route::post('/materials',[MaterialController::class,'store']);
 Route::put('/materials/{id}',[MaterialController::class,'update']);
 Route::delete('/materials/{id}',[MaterialController::class,'destroy']);
-
+Route::get('/download/{id}',[MaterialController::class,'download']);
 //rutas de material_user
 Route::get('material__users',[Material_UserController::class,'index']);
 Route::get('material__users/{id}',[Material_UserController::class,'show']);
 Route::post('material__users',[Material_UserController::class,'store']);
 Route::put('material__users/{id}',[Material_UserController::class,'update']);
 Route::delete('material__users/{id}',[Material_UserController::class,'destroy']);
+Route::get('mvisual',[Material_UserController::class,'visualizacion']);
+Route::get('mdesc',[Material_UserController::class,'descarga']);
 
 //rutas de material educational level
 Route::get('material__educational_levels',[Material_EducationalController::class,'index']);
