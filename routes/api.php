@@ -109,8 +109,8 @@ Route::get('material__users/{id}',[Material_UserController::class,'show']);
 Route::post('material__users',[Material_UserController::class,'store']);
 Route::put('material__users/{id}',[Material_UserController::class,'update']);
 Route::delete('material__users/{id}',[Material_UserController::class,'destroy']);
-Route::get('mvisual',[Material_UserController::class,'visualizacion']);
-Route::get('mdesc',[Material_UserController::class,'descarga']);
+Route::get('visualmuser',[Material_UserController::class,'visualizacion']);
+Route::get('descargasuser',[Material_UserController::class,'descarga']);
 
 //rutas de material educational level
 Route::get('material__educational_levels',[Material_EducationalController::class,'index']);
