@@ -103,6 +103,8 @@ Route::get('/buscar/{id}',[MaterialController::class,'buscar']);
 Route::post('/materials',[MaterialController::class,'store']);
 Route::put('/materials/{id}',[MaterialController::class,'update']);
 Route::delete('/materials/{id}',[MaterialController::class,'destroy']);
+Route::get('/download/{id}',[MaterialController::class,'download']);
+
 
 //rutas de material_user
 Route::get('material__users',[Material_UserController::class,'index']);
