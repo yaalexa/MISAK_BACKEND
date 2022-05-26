@@ -103,6 +103,7 @@ Route::post('/materials',[MaterialController::class,'store']);
 Route::put('/materials/{id}',[MaterialController::class,'update']);
 Route::delete('/materials/{id}',[MaterialController::class,'destroy']);
 
+
 //rutas de material_user
 Route::get('material__users',[Material_UserController::class,'index']);
 Route::get('material__users/{id}',[Material_UserController::class,'show']);
@@ -110,3 +111,4 @@ Route::post('material__users',[Material_UserController::class,'store']);
 Route::put('material__users/{id}',[Material_UserController::class,'update']);
 Route::delete('material__users/{id}',[Material_UserController::class,'destroy']);
 Route::get('visualmuser',[Material_UserController::class,'visualizacion']);
+Route::get('descargasuser',[Material_UserController::class,'descargas']);
