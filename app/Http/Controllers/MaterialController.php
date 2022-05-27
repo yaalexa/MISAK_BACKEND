@@ -17,7 +17,7 @@ class MaterialController extends Controller
     public function index()
     {
         $material = Material::all();
-        return $material;   
+        return $material;
 
     }
 
@@ -37,17 +37,17 @@ class MaterialController extends Controller
             'priority' => 'required',
             'pdf' => 'required',
             'img' => 'required'
-        ]); 
+        ]);
        // if(!$validar ->fails()){
             $material = new Material();
-           
+
             $image="";
             if($request->hasFile('img')){
             $image=$request->file('img')->store('image','public');
             }else{
             $image=Null;
             }
- 
+
             $file="";
             if($request->hasFile('pdf')){
                 $file=$request->file('pdf')->store('file','public');
@@ -80,7 +80,7 @@ class MaterialController extends Controller
             ]);
         }
     }
-   
+
      /**
      * Display the specified resource.
      *
@@ -135,12 +135,10 @@ class MaterialController extends Controller
             'year' => 'required',
             'num_pages' => 'required',
             'priority' => 'required',
-            'pdf' => 'required',
-            'img' => 'required',
             'type_material_id' => 'required',
             'editorial_id' => 'required',
             'area_id' => 'required'
-           
+
         ]);
 
         if(!$validar->fails()){
@@ -151,15 +149,14 @@ class MaterialController extends Controller
                 $material->isbn = $request ->isbn;
                 $material->priority = $request ->priority;
                 $material->num_pages = $request ->num_pages;
-                $material->img = $request ->img;
-                $material->pdf = $request ->pdf;
+
                 $material->type_material_id = $request->type_material_id;
                 $material->editorial_id = $request->editorial_id;
                 $material->area_id = $request->area_id;
                 $material->save();
                  return response()->json([
                 'res'=> true,
-                'mensaje' => 'material actualizado' 
+                'mensaje' => 'material actualizado'
             ]);
 
             }else{
@@ -168,7 +165,9 @@ class MaterialController extends Controller
                     'mensaje' => 'error al actualizar'
                 ]);
             }
-        }else{
+        }
+
+        else{
             return "entrada duplicada";
         }
     }
