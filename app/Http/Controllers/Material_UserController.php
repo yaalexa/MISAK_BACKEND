@@ -158,6 +158,7 @@ class Material_UserController extends Controller
         ->where('material__users.detalle_material','=','visualizado')
         ->groupBy('material__users.material_id','material__users.detalle_material','materials.name','materials.img')
         ->orderBy('conteo','desc')
+        ->take(5)
         ->get();
         
         return $visualizacion;
@@ -169,6 +170,7 @@ class Material_UserController extends Controller
         ->where('material__users.detalle_material','=','descargado')
         ->groupBy('material__users.material_id','material__users.detalle_material','materials.name','materials.img')
         ->orderBy('conteo','desc')
+        ->take(5)
         ->get();
         
         return $visualizacion;
