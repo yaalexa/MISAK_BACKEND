@@ -37,7 +37,10 @@ class MaterialController extends Controller
             'num_pages' => 'required',
             'priority' => 'required',
             'pdf' => 'required',
-            'img' => 'required'
+            'img' => 'required',
+            'type_material_id' => 'required',
+            'editorial_id' => 'required',
+            'area_id' => 'required'
         ]); 
        // if(!$validar ->fails()){
             $material = new Material();
@@ -123,9 +126,12 @@ class MaterialController extends Controller
 
     public function buscarm(Request $request)
     {
-        $filtro=$request ->buscador;
-        $material = Material::where('name','LIKE','%'.$filtro.'%')->get();
-        return $material;
+        $filtro = $request->buscador;
+
+        $libros = Material::filtroPorTituloYAutor( $filtro )->get();
+
+        return $libros;
+         $libros=null;
        
     }
     /**
@@ -143,8 +149,6 @@ class MaterialController extends Controller
             'year' => 'required',
             'num_pages' => 'required',
             'priority' => 'required',
-            'pdf' => 'required',
-            'img' => 'required',
             'type_material_id' => 'required',
             'editorial_id' => 'required',
             'area_id' => 'required'
@@ -159,8 +163,6 @@ class MaterialController extends Controller
                 $material->isbn = $request ->isbn;
                 $material->priority = $request ->priority;
                 $material->num_pages = $request ->num_pages;
-                $material->img = $request ->img;
-                $material->pdf = $request ->pdf;
                 $material->type_material_id = $request->type_material_id;
                 $material->editorial_id = $request->editorial_id;
                 $material->area_id = $request->area_id;

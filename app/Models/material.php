@@ -25,7 +25,12 @@ class Material extends Model
         'created_at',
         'updated_at'
     ];
-
+    public function scopeFiltroPorTituloYAutor($query, $filtro)
+    {
+        if( !empty( $filtro) ) {
+            $query->where('name', 'LIKE', '%'.$filtro.'%');  
+        }
+    }
     //relacion de muchos a muchos
     public function author(){
         return $this->hasMany('App\Models\Author_Material','author_id','id');

@@ -35,5 +35,6 @@ class DatabaseSeeder extends Seeder
        Author_Material::factory(16)->create();
        Material_Educational_level::factory(16)->create();
        Material_User::factory(26)->create();
+       $this->call(UserSeeder::class);
     }
 }
