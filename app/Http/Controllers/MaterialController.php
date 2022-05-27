@@ -6,6 +6,7 @@ use App\Models\Material;
 use Illuminate\Validation\Rules\Exist;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB; 
 
 class MaterialController extends Controller
 {
@@ -120,6 +121,13 @@ class MaterialController extends Controller
         }
     }
 
+    public function buscarm(Request $request)
+    {
+        $filtro=$request ->buscador;
+        $material = Material::where('name','LIKE','%'.$filtro.'%')->get();
+        return $material;
+       
+    }
     /**
      * Update the specified resource in storage.
      *
@@ -202,6 +210,10 @@ class MaterialController extends Controller
         //return response()->download($pathToFile);
         return response()->file($pathToFile);
     }
+    public function search($search_value){
+        $users = Material::query()
+        ->whereLike(['name'], $search_value)
+        ->get();
+        return $users ;
+    }
 }
-
-

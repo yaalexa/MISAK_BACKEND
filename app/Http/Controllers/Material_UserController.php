@@ -32,6 +32,8 @@ class Material_UserController extends Controller
     {
         $validar= Validator::make($request->all(), [
             'manejo_users' => 'required',
+            //////////////////////////////////////////////////////////////////
+            // recordar que es campo detalle material es el manejo del material
             'detalle_material' => 'required',
             'date_download' => 'required',
             'material_id' => 'required',
@@ -42,8 +44,7 @@ class Material_UserController extends Controller
             
             $material_user->manejo_users = $request ->manejo_users;
             $material_user->detalle_material = $request ->detalle_material;
-            $date = Carbon::now();
-            $material_user->date_download = $date->format('Y-m-d H:i:s');
+            $material_user->date_download = $request ->date_download;
             $material_user->material_id = $request ->material_id;
             $material_user->users_id = $request ->users_id;
  
@@ -51,12 +52,12 @@ class Material_UserController extends Controller
 
             return response()->json([
                 'res'=> true,
-                'mensaje' => $material_user->date_download 
+                'mensaje' => 'registro guardado' 
             ]);
         }else{
             return response()->json([
                 'res'=> false,
-                'mensaje' => $material_user->date_download 
+                'mensaje' => 'error entrada duplicada' 
             ]);
         }
     }
@@ -106,7 +107,8 @@ class Material_UserController extends Controller
             if(isset($material_user)){
                 $material_user->manejo_users = $request ->manejo_users;
                 $material_user->detalle_material = $request ->detalle_material;
-                $material_user->date_download = $request ->date_download;
+                $date = Carbon::now();
+                $material_user->date_download = $date->format('Y-m-d H:i:s');
                 $material_user->material_id = $request ->material_id;
                 $material_user->users_id = $request ->users_id;
 
@@ -153,7 +155,7 @@ class Material_UserController extends Controller
         $visualizacion=DB::table('material__users')
         ->select('material__users.material_id as id','material__users.detalle_material','materials.name','materials.img', DB::raw('COUNT(material__users.material_id) as conteo'))
         ->join('materials','material__users.material_id','=','materials.id')
-        ->where('material__users.detalle_material','=','visualizado')
+        ->where('material__users.detalle_material','=','visualizacion')
         ->groupBy('material__users.material_id','material__users.detalle_material','materials.name','materials.img')
         ->orderBy('conteo','desc')
         ->get();
@@ -164,11 +166,13 @@ class Material_UserController extends Controller
         $visualizacion=DB::table('material__users')
         ->select('material__users.material_id as id','material__users.detalle_material','materials.name','materials.img', DB::raw('COUNT(material__users.material_id) as conteo'))
         ->join('materials','material__users.material_id','=','materials.id')
-        ->where('material__users.detalle_material','=','descargado')
+        ->where('material__users.detalle_material','=','descarga')
         ->groupBy('material__users.material_id','material__users.detalle_material','materials.name','materials.img')
         ->orderBy('conteo','desc')
         ->get();
         
         return $visualizacion;
     }
+    
+    
 }

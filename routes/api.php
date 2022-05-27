@@ -58,6 +58,7 @@ Route::get('users/{id}',[UserController::class,'show']); // con esta ruta puedo 
 Route::put('users/{id}',[UserController::class,'update']); // con esta ruta puedo actualizar un usuario
 Route::delete('users/{id}',[UserController::class,'destroy']); // con esta ruta puedo eliminar un usuario 
 
+
 //de esta forma nos genera todas las rutas
 
 Route::get('editorials',[EditorialController::class,'index']); // con esta ruta puedo ver todas las editoriales
@@ -103,6 +104,8 @@ Route::post('/materials',[MaterialController::class,'store']);
 Route::put('/materials/{id}',[MaterialController::class,'update']);
 Route::delete('/materials/{id}',[MaterialController::class,'destroy']);
 Route::get('/download/{id}',[MaterialController::class,'download']);
+Route::get('/search',[MaterialController::class,'buscarm']);
+
 //rutas de material_user
 Route::get('material__users',[Material_UserController::class,'index']);
 Route::get('material__users/{id}',[Material_UserController::class,'show']);
@@ -118,4 +121,3 @@ Route::get('material__educational_levels/{id}',[Material_EducationalController::
 Route::post('material__educational_levels',[Material_EducationalController::class,'store']);
 Route::put('material__educational_levels/{id}',[Material_EducationalController::class,'update']);
 Route::delete('material__educational_levels/{id}',[Material_EducationalController::class,'destroy']);
-
