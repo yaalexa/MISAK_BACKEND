@@ -155,7 +155,7 @@ class Material_UserController extends Controller
         $visualizacion=DB::table('material__users')
         ->select('material__users.material_id as id','material__users.detalle_material','materials.name','materials.img', DB::raw('COUNT(material__users.material_id) as conteo'))
         ->join('materials','material__users.material_id','=','materials.id')
-        ->where('material__users.detalle_material','=','visualizacion')
+        ->where('material__users.detalle_material','=','visualizado')
         ->groupBy('material__users.material_id','material__users.detalle_material','materials.name','materials.img')
         ->orderBy('conteo','desc')
         ->get();
@@ -166,7 +166,7 @@ class Material_UserController extends Controller
         $visualizacion=DB::table('material__users')
         ->select('material__users.material_id as id','material__users.detalle_material','materials.name','materials.img', DB::raw('COUNT(material__users.material_id) as conteo'))
         ->join('materials','material__users.material_id','=','materials.id')
-        ->where('material__users.detalle_material','=','descarga')
+        ->where('material__users.detalle_material','=','descargado')
         ->groupBy('material__users.material_id','material__users.detalle_material','materials.name','materials.img')
         ->orderBy('conteo','desc')
         ->get();

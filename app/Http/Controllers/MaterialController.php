@@ -127,12 +127,9 @@ class MaterialController extends Controller
     public function buscarm(Request $request)
     {
         $filtro = $request->buscador;
-
         $libros = Material::filtroPorTituloYAutor( $filtro )->get();
-
         return $libros;
-         $libros=null;
-       
+
     }
     /**
      * Update the specified resource in storage.
@@ -212,10 +209,5 @@ class MaterialController extends Controller
         //return response()->download($pathToFile);
         return response()->file($pathToFile);
     }
-    public function search($search_value){
-        $users = Material::query()
-        ->whereLike(['name'], $search_value)
-        ->get();
-        return $users ;
-    }
+  
 }
