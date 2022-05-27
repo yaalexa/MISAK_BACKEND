@@ -21,6 +21,7 @@ class UserFactory extends Factory
     public function definition()
     {
         $array = ['Cedula', 'Cedula de extrajeria','pasaporte', 'PEP','Tarjeta de identidad','Otro'];
+        $array2 =[2,3,4];
         $firstName = $this->faker->firstName;
         $lastName = $this->faker->lastName;
         return [
@@ -32,8 +33,8 @@ class UserFactory extends Factory
             'certificate_misak' => $this->faker->randomNumber(5, true),
             'email_verified_at' => now(),
             'remember_token' => Str::random(10),
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi', // password
-            'rol_id'=> Rol::all()->random()->id,
+            'password' => bcrypt('password'), // password
+            'rol_id'=> Arr::random($array2)
         ];
     }
 

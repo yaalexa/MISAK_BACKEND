@@ -25,6 +25,7 @@ class DatabaseSeeder extends Seeder
     {
        // \App\Models\User::factory(10)->create();
        $this->call(Roltable::class);
+       $this->call(UserSeeder::class);
        User::factory(10)->create();
        Type_Material::factory(8)->create();
        Editorial::factory(15)->create();
