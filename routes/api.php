@@ -14,7 +14,8 @@ use App\Http\Controllers\Author_MaterialController;
 use App\Http\Controllers\Material_UserController;
 use App\Http\Controllers\Reporters_inicialController;
 use App\Http\Controllers\Reporters_visualizacionController;
-
+use App\Http\Controllers\Reportes_DescargasController;
+use App\Http\Controllers\Reportes_DocentesController;
 
 
 //use App\Http\Controllers\AuthorController;
@@ -117,3 +118,10 @@ Route::delete('material__users/{id}',[Material_UserController::class,'destroy'])
 Route::get('/Reportes',[Reporters_inicialController::class,'index']);
 //Reporte de visualizacion
 Route::get('/Reportes_Visualizacion',[Reporters_visualizacionController::class,'index']);
+//Reportes descargas
+Route::get('/Reportes_Descargas',[Reportes_DescargasController::class,'index']);
+//Reportes docente
+Route::get('/Reportes_Docente',[Reportes_DocentesController::class,'index']);
+
+
+
