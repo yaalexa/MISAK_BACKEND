@@ -7,7 +7,7 @@ use App\Models\Material_User;
 use Illuminate\Validation\Rules\Exist;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB; 
+use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 class Material_UserController extends Controller
 {
@@ -36,27 +36,27 @@ class Material_UserController extends Controller
             'date_download' => 'required',
             'material_id' => 'required',
             'users_id' => 'required'
-        ]); 
+        ]);
         if(!$validar ->fails()){
             $material_user = new Material_User();
-            
+
             $material_user->manejo_users = $request ->manejo_users;
             $material_user->detalle_material = $request ->detalle_material;
             $date = Carbon::now();
             $material_user->date_download = $date->format('Y-m-d H:i:s');
             $material_user->material_id = $request ->material_id;
             $material_user->users_id = $request ->users_id;
- 
+
             $material_user->save();
 
             return response()->json([
                 'res'=> true,
-                'mensaje' => $material_user->date_download 
+                'mensaje' => $material_user->date_download
             ]);
         }else{
             return response()->json([
                 'res'=> false,
-                'mensaje' => $material_user->date_download 
+                'mensaje' => $material_user->date_download
             ]);
         }
     }
@@ -79,7 +79,7 @@ class Material_UserController extends Controller
         }else{
             return response()->json([
                 'res'=> false,
-                'mensaje' => 'registro no encontrado' 
+                'mensaje' => 'registro no encontrado'
             ]);
         }
     }
@@ -113,7 +113,7 @@ class Material_UserController extends Controller
                 $material->save();
                  return response()->json([
                 'res'=> true,
-                'mensaje' => 'material actualizado' 
+                'mensaje' => 'material actualizado'
             ]);
 
             }else{
@@ -157,7 +157,7 @@ class Material_UserController extends Controller
         ->groupBy('material__users.material_id','material__users.detalle_material','materials.name','materials.img')
         ->orderBy('conteo','desc')
         ->get();
-        
+
         return $visualizacion;
     }
     public function descarga (){
@@ -168,7 +168,23 @@ class Material_UserController extends Controller
         ->groupBy('material__users.material_id','material__users.detalle_material','materials.name','materials.img')
         ->orderBy('conteo','desc')
         ->get();
-        
+
         return $visualizacion;
     }
+    //Funcion para mostrar en proceso
+    public function proceso ($id) {
+        $proceso=DB::table('material__users')
+        ->select('materials.name AS MATERIAL', 'editorials.name AS EDITORIAL','authors.name AS AUTOR',
+        'material__users.detalle_material AS PROCESO','material__users.date_download AS FECHA')
+        ->join('materials','materials.id','=','material__users.material_id')
+        ->join('editorials','editorials.id','=','materials.editorial_id')
+        ->join('author__materials', 'author__materials.material_id','=','materials.id')
+        ->join('authors','authors.id','=','author__materials.author_id')
+        ->where('material__users.users_id','=',$id)
+        ->groupBy('MATERIAL', 'EDITORIAL','AUTOR',
+        'PROCESO','FECHA')
+        ->get();
+        return $proceso;
+    }
+
 }
