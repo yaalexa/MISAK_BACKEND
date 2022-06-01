@@ -18,7 +18,7 @@ class Reportes_DescargasController extends Controller
                 'materials.year',
                 'materials.num_pages',
                 'areas.name as area',
-                DB::raw("sum(case when 'material__users.detalle_material' '=' 'descargas' then 1 else 0 end) as conteo")
+                DB::raw("count('material__users.detalle_material' '=' 'visualizacion') as conteo")
             )
             ->join('areas', 'area_id', '=', 'areas.id')
             ->leftJoin('material__users', 'material__users.material_id', '=', 'materials.id')
