@@ -97,8 +97,7 @@ class UserController extends Controller
     }
     public function show($id)
     {
-        $user = User::where('id',$id)
-        ->first();
+        $user = User::where('id',$id) ->get();
         if (isset($user)){
             return response()->json([
                 'res'=> true,
