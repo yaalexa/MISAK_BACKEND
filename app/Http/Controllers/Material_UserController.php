@@ -175,6 +175,19 @@ class Material_UserController extends Controller
         
         return $visualizacion;
     }
-    
+    public function proceso ($id) {
+        $proceso=DB::table('material__users')
+        ->select('materials.name AS MATERIAL', 'editorials.name AS EDITORIAL','authors.name AS AUTOR',
+        'material__users.detalle_material AS PROCESO','material__users.date_download AS FECHA')
+        ->join('materials','materials.id','=','material__users.material_id')
+        ->join('editorials','editorials.id','=','materials.editorial_id')
+        ->join('author__materials', 'author__materials.material_id','=','materials.id')
+        ->join('authors','authors.id','=','author__materials.author_id')
+        ->where('material__users.users_id','=',$id)
+        ->groupBy('MATERIAL', 'EDITORIAL','AUTOR',
+        'PROCESO','FECHA')
+        ->get();
+        return $proceso;
+    }
     
 }
