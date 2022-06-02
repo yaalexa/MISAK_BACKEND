@@ -209,5 +209,35 @@ class MaterialController extends Controller
         //return response()->download($pathToFile);
         return response()->file($pathToFile);
     }
+
+    public function visualizacion()
+    {
+        $visualizacion=DB::table('materials')
+        ->select('materials.id AS id', 'materials.name AS NOMBRE', 'materials.isbn AS ISBN', 'materials.num_pages AS #PAG',
+                'materials.priority AS PRIORIDAD', 'materials.year AS AÑO', 'type__materials.name AS TIPO MATERIAL' ,
+                'editorials.name AS EDITORIAL', 'areas.name AS AREA')
+        ->join('type__materials', 'materials.type_material_id','=','type__materials.id')
+        ->join('editorials', 'materials.editorial_id','=','editorials.id')
+        ->join('areas', 'materials.area_id','=','areas.id')
+        ->groupBy('ID', 'NOMBRE', 'ISBN', '#PAG', 'PRIORIDAD', 'AÑO', 'TIPO MATERIAL' , 'EDITORIAL', 'AREA')
+        ->get();
+        return $visualizacion;
+    }
+    public function buscarvisualizacion($name){
+    {
+        $visualizacion1=DB::table('author__materials')
+        ->select('materials.id AS ID', 'materials.name AS NOMBRE', 'materials.isbn AS ISBN', 'materials.num_pages AS #PAG',
+                'materials.priority AS PRIORIDAD', 'materials.year AS AÑO', 'authors.name AS AUTOR' ,
+                'editorials.name AS EDITORIAL', 'areas.name AS AREA')
+        ->join('materials', 'author__materials.material_id','=','materials.id')
+        ->join('authors', 'author__materials.author_id','=','authors.id')
+        ->join('editorials', 'materials.editorial_id','=','editorials.id')
+        ->join('areas', 'materials.area_id','=','areas.id')
+        ->where('materials.name','like','%'.$name.'%')
+        ->groupBy('ID', 'NOMBRE', 'ISBN', '#PAG', 'PRIORIDAD', 'AÑO', 'AUTOR' , 'EDITORIAL', 'AREA')
+        ->get();
+        return $visualizacion1;
+    }
+    }
   
 }
