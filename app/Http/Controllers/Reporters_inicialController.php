@@ -20,7 +20,6 @@ class Reporters_inicialController extends Controller
         $material = DB::table('materials')
             ->select(
                 'materials.name',
-                'materials.img',
                 'materials.isbn',
                 'materials.year',
                 'materials.num_pages',
@@ -40,7 +39,6 @@ class Reporters_inicialController extends Controller
         $material = DB::table('materials')
             ->select(
                 'materials.name',
-                'materials.img',
                 'materials.isbn',
                 'materials.year',
                 'materials.num_pages',

@@ -9,7 +9,7 @@ class ReportController extends Controller
 {
     public function getDatabaseConfig()
     {
-      $jdbc_dir ='C:\xampp3.3\htdocs\GitHub\MISAK\MISAK_BACKEND\MISAK_BACKEND\vendor\cossou\jasperphp\src\JasperStarter\jdbc';
+      $jdbc_dir =base_path('vendor/cossou/jasperphp/src/JasperStarter/jdbc');
        return [
          'driver'   => 'mysql',
          'host'     => env('DB_HOST'),
@@ -64,19 +64,17 @@ class ReportController extends Controller
   public function Report_VIPDF(){
     $db = new ReportController();
     $jasper = new JasperPHP;
-    $jasper->compile(__DIR__ . '../public/storage/report/reportvisua.jrmxl')->execute();
-    $jasper->process(__DIR__ . '../public/storage/report/reportvisua.jasper',
+    $jasper->compile(__DIR__ . '/../../../public/storage/report/reportvisua.jrxml')->execute();
+    $jasper->process(__DIR__ . '/../../../public/storage/report/reportvisua.jasper',
         false,
         ['pdf'],
         [],
         $db->getDatabaseconfig(),
     )->execute();
-    $array = $jasper->list_parameters(
-        __DIR__ . '../public/storage/report/reportvisua.jasper'
+    $array = $jasper->list_parameters(__DIR__ . '/../../../public/storage/report/reportvisua.jasper'
     )->execute();
-    $pathTofile = storage_path('../public/storage/report/reportvisua.pdf');
+    $pathTofile = storage_path('/app/public/report/reportvisua.pdf');
     return response()->file($pathTofile);
-
 }
 public function Report_DEPDF(){
     $db = new ReportController();

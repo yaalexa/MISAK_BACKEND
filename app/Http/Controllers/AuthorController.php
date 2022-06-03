@@ -47,7 +47,7 @@ class AuthorController extends Controller
                 'res'=> true,
                 'mensaje' => 'registro guardado' 
             ]);
-        }else{
+            }else{
             return response()->json([
                 'res'=> false,
                 'mensaje' => 'error entrada duplicada' 
