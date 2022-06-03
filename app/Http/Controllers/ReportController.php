@@ -9,7 +9,7 @@ use JasperPHP\JasperPHP;
 class ReportController extends Controller
 {
     public function getDatabaseConfig(){
-        $jdbc_dir = 'C:\xampp\htdocs\MISAK_BACKEND\MISAK_BACKEND\vendor\cossou\jasperphp\src\JasperStarter\jdbc';
+        $jdbc_dir = __DIR__.'../vendor/cossou/jasperphp/src/jasperStarter/jdbc';
         return [
             'driver' => 'mysql',
             'host'  => env('DB_HOST'),

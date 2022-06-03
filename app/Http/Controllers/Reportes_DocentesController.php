@@ -24,4 +24,21 @@ class Reportes_DocentesController extends Controller
             ->get();
             return $docente;
     }
+
+    public function DetalleDo($id){
+        $detalle = DB::table('users')
+        ->select(
+            'users.name',
+            'materials.name as material',
+            'materials.img',
+            'materials.isbn',
+            'material__users.detalle_material'
+            )
+        ->join('material__users', 'material__users.users_id', '=', 'users.id')
+        ->join('materials', 'material__users.material_id', '=', 'materials.id')
+        ->where('users.id', '=', $id)
+        ->get();
+
+        return $detalle;
+    }
 }

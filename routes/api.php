@@ -124,5 +124,6 @@ Route::get('/Reportes_Descargas', [Reportes_DescargasController::class, 'index']
 Route::get('/Report_DEPDF', [ReportController::class, 'Report_DEPDF']);
 //Reportes docente
 Route::get('/Reportes_Docente', [Reportes_DocentesController::class, 'index']);
+Route::get('/Reportes_DocenteDe/{id}', [Reportes_DocentesController::class, 'DetalleDo']);
 Route::get('/Report_DOPDF', [ReportController::class, 'Report_DOPDF']);
 
