@@ -126,47 +126,13 @@ Route::post('material__educational_levels',[Material_EducationalController::clas
 Route::put('material__educational_levels/{id}',[Material_EducationalController::class,'update']);
 Route::delete('material__educational_levels/{id}',[Material_EducationalController::class,'destroy']);
 
-
-Route::get('/reporteV', function () {
-   $db=new ReportController;
-    $jasper = new JasperPHP;
-    $jasper->compile(__DIR__ . '/../public/storage/report/reportvisua.jrxml')->execute();
-    $jasper->process( __DIR__ . '/../public/storage/report/reportvisua.jasper',
-        false,
-        ['pdf'], 
-        [], 
-        $db->getDatabaseConfig(),
-    )->execute();
-    $array = $jasper->list_parameters(
-        __DIR__ . '/../public/storage/report/reportvisua.jasper'
-    )->execute();
-    $pathToFile = storage_path("/../public/storage/report/reportvisua.pdf" );
-    return response()->file($pathToFile);
-});
-
-Route::get('/reporteD', function () {
-    $db=new ReportController;
-     $jasper = new JasperPHP;
-     $jasper->compile(__DIR__ . '/../public/storage/report/reportdescar.jrxml')->execute();
-     $jasper->process( __DIR__ . '/../public/storage/report/reportdescar.jasper',
-         false,
-         ['pdf'], 
-         [], 
-         $db->getDatabaseConfig(),
-     )->execute();
-     $array = $jasper->list_parameters(
-         __DIR__ . '/../public/storage/report/reportdescar.jasper'
-     )->execute();
-     $pathToFile = storage_path("/../public/storage/report/reportdescar.pdf" );
-     return response()->file($pathToFile);
- });
-
  //Reportes
 Route::get('Reports',[Reporters_inicialController::class,'index']);
 Route::get('Reportsvisua',[Reporters_inicialController::class,'ReportVi']);
 Route::get('ReportsDes',[Reporters_inicialController::class,'ReportDe']);
 Route::get('ReportsDoc',[Reporters_inicialController::class,'ReportDoc']);
 Route::get('ReportsDetaDo',[Reporters_inicialController::class,'DetalleDo']);
+
 //Reportes PDF
 Route::get('Report_ViPDF',[ReportController::class,'Report_VIPDF']);
 Route::get('Report_DesPDF',[ReportController::class,'Report_DEPDF']);
