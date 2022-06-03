@@ -106,7 +106,7 @@ Route::post('/materials',[MaterialController::class,'store']);
 Route::put('/materials/{id}',[MaterialController::class,'update']);
 Route::delete('/materials/{id}',[MaterialController::class,'destroy']);
 Route::get('/download/{id}',[MaterialController::class,'download']);
-Route::get('/search',[MaterialController::class,'buscarm']);
+Route::get('/search/{name}',[MaterialController::class,'buscarm']);
 Route::get('visualizacion',[MaterialController::class,'visualizacion']);
 Route::get('buscarvisualizacion/{id}',[MaterialController::class,'buscarvisualizacion']);
 //rutas de material_user

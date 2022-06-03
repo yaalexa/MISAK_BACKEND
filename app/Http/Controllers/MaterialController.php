@@ -124,12 +124,14 @@ class MaterialController extends Controller
         }
     }
 
-    public function buscarm(Request $request)
+    public function buscarm(Request $request,$buscador)
     {
-        $filtro = $request->buscador;
+        if (isset($buscador)){
+        $filtro = $buscador;
         $libros = Material::filtroPorTituloYAutor( $filtro )->get();
         return $libros;
-
+      }
+      
     }
     /**
      * Update the specified resource in storage.
