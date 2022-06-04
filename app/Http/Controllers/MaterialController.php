@@ -127,8 +127,7 @@ class MaterialController extends Controller
     public function buscarm(Request $request,$buscador)
     {
         if (isset($buscador)){
-        $filtro = $buscador;
-        $libros = Material::filtroPorTituloYAutor( $filtro )->get();
+        $libros = Material::filtroPorTituloYAutor( $buscador )->get();
         return $libros;
       }
       
