@@ -139,3 +139,5 @@ Route::get('Report_DesPDF',[ReportController::class,'Report_DEPDF']);
 Route::get('Reports_DocPdf',[ReportController::class,'Report_DOVISPDF']);
 Route::get('Reports_DocDePdf/{id}',[ReportController::class,'Report_DODEPDF']);
 Route::get('prueba',[ReportController::class,'generateReport']);
+
+Route::get('buscadorfinal/{id}',[MaterialController::class,'buscadorfinal']);

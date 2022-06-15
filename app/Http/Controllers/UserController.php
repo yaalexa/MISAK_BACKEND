@@ -99,17 +99,7 @@ class UserController extends Controller
     public function show($id)
     {
         $user = User::where('id',$id) ->get();
-        if (isset($user)){
-            return response()->json([
-                'res'=> true,
-                'user' => $user 
-            ]);
-        }else{
-            return response()->json([
-                'res'=> false,
-                'mensaje' => 'registro no encontrado' 
-            ]);
-        }
+        return $user;
     }
     public function index()
     {
