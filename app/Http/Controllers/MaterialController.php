@@ -240,5 +240,24 @@ class MaterialController extends Controller
         return $visualizacion1;
     }
     }
-  
+    public function buscadorfinal($search)
+    {
+        $visualizacion1 = Material::select(
+                'materials.id as Id',
+                'materials.name as Nombre',
+                'editorials.name AS Editorial',
+                'areas.name AS Area',
+                'type__materials.name AS Tipo_Material',
+                'materials.img AS Imagen'
+            )
+            ->leftjoin('areas', 'areas.id', '=', 'materials.area_id')
+            ->leftjoin('type__materials', 'type__materials.id', '=', 'materials.type_material_id')
+            ->leftjoin('editorials', 'editorials.id', '=', 'materials.editorial_id')
+            ->where('materials.name', 'like', '%' . $search . '%')
+            ->orWhere('editorials.name', 'like', '%' . $search . '%')
+            ->orWhere('type__materials.name', 'like', '%' . $search . '%')
+            ->orWhere('areas.name', 'like', '%' . $search . '%')
+            ->get();
+        return $visualizacion1;
+    }
 }
