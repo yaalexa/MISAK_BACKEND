@@ -243,21 +243,43 @@ class MaterialController extends Controller
     public function buscadorfinal($search)
     {
         $visualizacion1 = Material::select(
-                'materials.id as Id',
-                'materials.name as Nombre',
-                'editorials.name AS Editorial',
-                'areas.name AS Area',
-                'type__materials.name AS Tipo_Material',
-                'materials.img AS Imagen'
+                'materials.id as id',
+                'materials.priority as prioridad',
+                'materials.name as nombre',
+                'editorials.name AS editorial',
+                'areas.name AS area',
+                'type__materials.name AS tipo_material',
+                'materials.img AS imagen',
+                'a.autores AS autor',
+                't.nivel AS nivel_educativo'
             )
             ->leftjoin('areas', 'areas.id', '=', 'materials.area_id')
             ->leftjoin('type__materials', 'type__materials.id', '=', 'materials.type_material_id')
             ->leftjoin('editorials', 'editorials.id', '=', 'materials.editorial_id')
+            ->leftjoin(DB::raw("(select materials.id as idmaterial,group_concat(authors.name separator ',') as autores 
+                    from authors 
+                    left join author__materials on authors.id=author__materials.author_id 
+                    left join materials on materials.id=author__materials.material_id 
+                    GROUP BY idmaterial
+                        ) as a"),function($join){
+                            $join->on("a.idmaterial","=","materials.id");
+                    })
+            ->leftjoin(DB::raw("(select materials.id as idmaterialt,group_concat(educational_levels.name separator ',') as nivel 
+            from educational_levels 
+               left join material__educational_levels on material__educational_levels.educational_level_id=educational_levels.id
+               left join materials on materials.id=material__educational_levels.material_id
+               GROUP BY idmaterialt) as t"), function($join1){
+                    $join1->on("t.idmaterialt","=","materials.id");
+               })
             ->where('materials.name', 'like', '%' . $search . '%')
             ->orWhere('editorials.name', 'like', '%' . $search . '%')
             ->orWhere('type__materials.name', 'like', '%' . $search . '%')
             ->orWhere('areas.name', 'like', '%' . $search . '%')
+            ->orWhere('a.autores', 'like', '%' . $search . '%')
+            ->orWhere('t.nivel', 'like', '%' . $search . '%')
             ->get();
         return $visualizacion1;
     }
+    
+  
 }

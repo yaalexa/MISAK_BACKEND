@@ -99,7 +99,8 @@ class UserController extends Controller
     public function show($id)
     {
         $user = User::where('id',$id) ->get();
-        return $user;
+       return $user;
+    
     }
     public function index()
     {
@@ -122,7 +123,7 @@ class UserController extends Controller
             "document_number" => "required|unique:users",
             "certificate_misak" => "required|unique:users",
             "email" => "required|unique:users",
-            "password" => "required",
+            'password' => 'required|confirmed',
             "rol_id" =>"required", //se agrego id rol y se borro de tabla roles
         ]);
 
@@ -135,7 +136,7 @@ class UserController extends Controller
                 $user->document_number = $request ->document_number;
                 $user->certificate_misak = $request ->certificate_misak;
                 $user->email = $request ->email;
-                $user->password = $request ->password;
+                $user->password = Hash::make($request->password);
                 $user->rol_id = $request->rol_id;
 
                 $user->save();
