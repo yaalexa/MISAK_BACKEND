@@ -256,7 +256,7 @@ class MaterialController extends Controller
             ->leftjoin('areas', 'areas.id', '=', 'materials.area_id')
             ->leftjoin('type__materials', 'type__materials.id', '=', 'materials.type_material_id')
             ->leftjoin('editorials', 'editorials.id', '=', 'materials.editorial_id')
-            ->leftjoin(DB::raw("(select materials.id as idmaterial,group_concat(authors.name separator ',') as autores 
+            ->join(DB::raw("(select materials.id as idmaterial,group_concat(authors.name separator ',') as autores 
                     from authors 
                     left join author__materials on authors.id=author__materials.author_id 
                     left join materials on materials.id=author__materials.material_id 
@@ -264,7 +264,7 @@ class MaterialController extends Controller
                         ) as a"),function($join){
                             $join->on("a.idmaterial","=","materials.id");
                     })
-            ->leftjoin(DB::raw("(select materials.id as idmaterialt,group_concat(educational_levels.name separator ',') as nivel 
+            ->join(DB::raw("(select materials.id as idmaterialt,group_concat(educational_levels.name separator ',') as nivel 
             from educational_levels 
                left join material__educational_levels on material__educational_levels.educational_level_id=educational_levels.id
                left join materials on materials.id=material__educational_levels.material_id
