@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-
+use Illuminate\Support\Facades\Crypt;
 
 
 class UserController extends Controller
@@ -176,6 +176,77 @@ class UserController extends Controller
                 'res'=> false,
                 'mensaje' => 'falla al elimar no se encontro registro'
             ]);
+        }
+    }
+    public function restablecer(Request $request){
+        $validar=Validator::make($request->all(), [
+            "email" => "required",
+            "password" => "required",
+            "newpassword"=> "required|confirmed",
+        ]);
+        $correo=User::where("email","=", $request->email)->first();
+        if(isset($correo)){
+            if(Hash::check($request->password, $correo->password)){
+                $correo->password = Hash::make($request->newpassword);
+                $correo->save();
+                return response()->json([
+                    'mensaje'=>"Se actualizo la contraseña"
+                ]);
+            }else{
+                return response()->json([
+                    'mensaje'=>"Contraseña no coincide"
+                ]);
+            }
+        }else{
+                return response()->json([
+                    'mensaje'=>"Correo no coincide",
+                    'otra'=>$correo
+
+                ]);
+            }
+    }
+    public function update1(Request $request, $id)
+    {
+        $validar= Validator::make($request->all(), [
+            "name" => "required",
+            "full_name" => "required",
+            "document_type" => "required",
+            "document_number" => "required",
+            "certificate_misak" => "required",
+            "email" => "required",
+            'password' => '',
+            "rol_id" =>"required", //se agrego id rol y se borro de tabla roles
+        ]);
+
+        if(!$validar->fails()){
+            $user = User::find($id);
+            if(isset($user)){
+                $user->name = $request ->name;
+                $user->full_name = $request ->full_name;
+                $user->document_type = $request ->document_type;
+                $user->document_number = $request ->document_number;
+                $user->certificate_misak = $request ->certificate_misak;
+                $user->email = $request ->email;
+                $password=User::where("password","=",$request->pasdword)->first();
+                if(isset($password)){
+                $password->password=Hash::make($request->password);
+                }
+                 $user->rol_id = $request->rol_id;
+
+                $user->save();
+                 return response()->json([
+                'res'=> true,
+                'mensaje' => 'Usuario actualizado'
+            ]);
+
+            }else{
+                return response()->json([
+                    'res'=> false,
+                    'mensaje' => 'error al actualizar'
+                ]);
+            }
+        }else{
+            return "entrada duplicada";
         }
     }
 }
