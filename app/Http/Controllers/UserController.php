@@ -19,8 +19,8 @@ class UserController extends Controller
             'full_name' => 'required',
             'email' => 'required|email|unique:users',
             'password' => 'required|confirmed',
-            'rol_id' => 'required' , 
-                   
+            'rol_id' => 'required' ,
+
         ]);
 
         $user = new User();
@@ -33,12 +33,12 @@ class UserController extends Controller
         $user->password = Hash::make($request->password);
         $user->rol_id = $request->rol_id;
         $user->save();
-        
+
 
         return response()->json([
             "status" => 1,
             "msg" => "¡Registro de usuario exitoso!",
-        ]);    
+        ]);
     }
 
 
@@ -64,19 +64,19 @@ class UserController extends Controller
                     "usr_id" => $user->id,
                     "rol_id" => $user->rol_id,
                     "usr_name" => $user->name,
-                ]);        
+                ]);
             }else{
                 return response()->json([
                     "status" => 0,
                     "msg" => "password incorrecto",
-                ]);    
+                ]);
             }
 
         }else{
             return response()->json([
                 "status" => 0,
                 "msg" => "Usuario no registrado",
-            ]);  
+            ]);
         }
     }
 
@@ -85,22 +85,22 @@ class UserController extends Controller
             "status" => 0,
             "msg" => "Acerca del perfil de usuario",
             "data" => auth()->user()
-        ]); 
+        ]);
     }
- 
+
     public function logout() {
         auth()->user()->tokens()->delete();
-        
+
         return response()->json([
             "status" => 1,
-            "msg" => "Cierre de Sesión",            
-        ]); 
+            "msg" => "Cierre de Sesión",
+        ]);
     }
     public function show($id)
     {
         $user = User::where('id',$id) ->get();
        return $user;
-    
+
     }
     public function index()
     {
@@ -142,7 +142,7 @@ class UserController extends Controller
                 $user->save();
                  return response()->json([
                 'res'=> true,
-                'mensaje' => 'Usuario actualizado' 
+                'mensaje' => 'Usuario actualizado'
             ]);
 
             }else{
@@ -176,6 +176,52 @@ class UserController extends Controller
                 'res'=> false,
                 'mensaje' => 'falla al elimar no se encontro registro'
             ]);
+        }
+    }
+
+
+    public function update1(Request $request, $id)
+    {
+        $validar= Validator::make($request->all(), [
+            "name" => "required",
+            "full_name" => "required",
+            "document_type" => "required",
+            "document_number" => "required",
+            "certificate_misak" => "required",
+            "email" => "required",
+            'password' => '',
+            "rol_id" =>"required", //se agrego id rol y se borro de tabla roles
+        ]);
+
+        if(!$validar->fails()){
+            $user = User::find($id);
+            if(isset($user)){
+                $user->name = $request ->name;
+                $user->full_name = $request ->full_name;
+                $user->document_type = $request ->document_type;
+                $user->document_number = $request ->document_number;
+                $user->certificate_misak = $request ->certificate_misak;
+                $user->email = $request ->email;
+                $password=User::where("password","=",$request->pasdword)->first();
+                if(isset($password)){
+                $password->password=Hash::make($request->password);
+                }
+                 $user->rol_id = $request->rol_id;
+
+                $user->save();
+                 return response()->json([
+                'res'=> true,
+                'mensaje' => 'Usuario actualizado'
+            ]);
+
+            }else{
+                return response()->json([
+                    'res'=> false,
+                    'mensaje' => 'error al actualizar'
+                ]);
+            }
+        }else{
+            return "entrada duplicada";
         }
     }
 }
