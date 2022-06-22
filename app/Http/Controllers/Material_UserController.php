@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Material_User;
+use App\Models\Material;
 use Illuminate\Validation\Rules\Exist;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
@@ -152,28 +153,122 @@ class Material_UserController extends Controller
         }
     }
     public function visualizacion (){
-        $visualizacion=DB::table('material__users')
-        ->select('material__users.material_id as id','material__users.detalle_material','materials.name','materials.img', DB::raw('COUNT(material__users.material_id) as conteo'))
-        ->join('materials','material__users.material_id','=','materials.id')
-        ->where('material__users.detalle_material','=','visualizado')
-        ->groupBy('material__users.material_id','material__users.detalle_material','materials.name','materials.img')
+        $visualizacion1 = Material::select(
+            'materials.id as id',
+            'materials.name as nombre',
+            'materials.priority AS prioridad',
+            'editorials.name AS editorial',
+            'areas.name AS area',
+            'type__materials.name AS tipo_material',
+            'materials.img AS imagen',
+            'a.autores AS autor',
+            't.nivel AS nivel_educativo',
+            DB::raw('COUNT(material_id) as conteo')
+        )
+            ->leftjoin('areas', 'areas.id', '=', 'materials.area_id')
+            ->leftjoin('type__materials', 'type__materials.id', '=', 'materials.type_material_id')
+            ->leftjoin('editorials', 'editorials.id', '=', 'materials.editorial_id')
+            /* Como hacer subconsultas AUTORES (muchos a muchos) */
+            ->leftjoin(DB::raw("(select materials.id as idmaterial,group_concat(authors.name separator ',') as autores
+                    from authors
+                    left join author__materials on authors.id=author__materials.author_id
+                    left join materials on materials.id=author__materials.material_id
+                    GROUP BY idmaterial
+                        ) as a"), function ($join) {
+                $join->on("a.idmaterial", "=", "materials.id");
+            })
+            /* Como hacer subconsultas NIVEL EDUCACIONAL (muchos a muchos) */
+            ->leftjoin(DB::raw("(select materials.id as idmaterialt,group_concat(educational_levels.name separator ',') as nivel
+            from educational_levels
+                left join material__educational_levels on material__educational_levels.educational_level_id=educational_levels.id
+                left join materials on materials.id=material__educational_levels.material_id
+                GROUP BY idmaterialt)
+                    as t"), function ($join1) {
+                $join1->on("t.idmaterialt", "=", "materials.id");
+            })
+            /* Como hacer subconsultas usuarios (muchos a muchos) */
+            ->leftjoin(DB::raw("(select materials.id AS idmaterialc, material__users.material_id, material__users.detalle_material
+            from users
+            left join material__users on users.id=material__users.users_id
+            left join materials on materials.id=material__users.material_id)
+            as c"), function($join){
+                $join->on("c.idmaterialc","=","materials.id");
+            })
+        ->where('c.detalle_material', '=', 'visualizado')
+        ->groupBy('materials.id',
+        'materials.name',
+        'materials.priority',
+        'editorials.name',
+        'areas.name',
+        'type__materials.name',
+        'materials.img',
+        'a.autores',
+        't.nivel',)
         ->orderBy('conteo','desc')
         ->take(5)
         ->get();
         
-        return $visualizacion;
+        return $visualizacion1;
     }
-    public function descarga (){
-        $visualizacion=DB::table('material__users')
-        ->select('material__users.material_id as id','material__users.detalle_material','materials.name','materials.img', DB::raw('COUNT(material__users.material_id) as conteo'))
-        ->join('materials','material__users.material_id','=','materials.id')
-        ->where('material__users.detalle_material','=','descargado')
-        ->groupBy('material__users.material_id','material__users.detalle_material','materials.name','materials.img')
-        ->orderBy('conteo','desc')
-        ->take(5)
-        ->get();
-        
-        return $visualizacion;
+    public function descarga()
+    {
+        $visualizacion1 = Material::select(
+            'materials.id as id',
+            'materials.name as nombre',
+            'materials.priority AS prioridad',
+            'editorials.name AS editorial',
+            'areas.name AS area',
+            'type__materials.name AS tipo_material',
+            'materials.img AS imagen',
+            'a.autores AS autor',
+            't.nivel AS nivel_educativo',
+            DB::raw('COUNT(material_id) as conteo')
+        )
+            ->leftjoin('areas', 'areas.id', '=', 'materials.area_id')
+            ->leftjoin('type__materials', 'type__materials.id', '=', 'materials.type_material_id')
+            ->leftjoin('editorials', 'editorials.id', '=', 'materials.editorial_id')
+            /* Como hacer subconsultas AUTORES (muchos a muchos) */
+            ->leftjoin(DB::raw("(select materials.id as idmaterial,group_concat(authors.name separator ',') as autores
+                    from authors
+                    left join author__materials on authors.id=author__materials.author_id
+                    left join materials on materials.id=author__materials.material_id
+                    GROUP BY idmaterial
+                        ) as a"), function ($join) {
+                $join->on("a.idmaterial", "=", "materials.id");
+            })
+            /* Como hacer subconsultas NIVEL EDUCACIONAL (muchos a muchos) */
+            ->leftjoin(DB::raw("(select materials.id as idmaterialt,group_concat(educational_levels.name separator ',') as nivel
+            from educational_levels
+                left join material__educational_levels on material__educational_levels.educational_level_id=educational_levels.id
+                left join materials on materials.id=material__educational_levels.material_id
+                GROUP BY idmaterialt)
+                    as t"), function ($join1) {
+                $join1->on("t.idmaterialt", "=", "materials.id");
+            })
+            /* Como hacer subconsultas usuarios (muchos a muchos) */
+            ->leftjoin(DB::raw("(select materials.id AS idmaterialc, material__users.material_id, material__users.detalle_material
+            from users
+            left join material__users on users.id=material__users.users_id
+            left join materials on materials.id=material__users.material_id)
+            as c"), function($join){
+                $join->on("c.idmaterialc","=","materials.id");
+            })
+
+            ->where('c.detalle_material', '=', 'descargado')
+            ->groupBy('materials.id',
+                'materials.name',
+                'materials.priority',
+                'editorials.name',
+                'areas.name',
+                'type__materials.name',
+                'materials.img',
+                'a.autores',
+                't.nivel',)
+            ->orderBy('conteo', 'desc')
+            ->take(5)
+            ->get();
+
+        return $visualizacion1;
     }
     public function proceso ($id) {
         $proceso=DB::table('material__users')
