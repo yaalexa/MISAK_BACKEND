@@ -21,6 +21,18 @@ class RolController extends Controller
         return $rol;
     }
 
+    /** Código Eduard
+     * Desplega la lista de roles
+     *solo cuando el usuario se registra, ya que
+     *todavia no está autenticado
+     * @return \Illuminate\Http\Response
+     */
+    public function obtenerRols()
+    {
+        $rol =Rol::all();
+        return $rol;
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -31,24 +43,24 @@ class RolController extends Controller
     {
         $validar= Validator::make($request->all(), [
             'name'=> "required|unique:rols",
-          
+
         ]);
         if(!$validar ->fails()){
             $rol = new Rol();
-            
+
             $rol->name = $request ->name;
-           
+
 
             $rol->save();
 
             return response()->json([
                 'res'=> true,
-                'mensaje' => 'Rol guardado' 
+                'mensaje' => 'Rol guardado'
             ]);
         }else{
             return response()->json([
                 'res'=> false,
-                'mensaje' => 'error entrada duplicada' 
+                'mensaje' => 'error entrada duplicada'
             ]);
         }
     }
@@ -66,12 +78,12 @@ class RolController extends Controller
         if (isset($rol)){
             return response()->json([
                 'res'=> true,
-                'rol' => $rol 
+                'rol' => $rol
             ]);
         }else{
             return response()->json([
                 'res'=> false,
-                'mensaje' => 'registro no encontrado' 
+                'mensaje' => 'registro no encontrado'
             ]);
         }
     }
@@ -87,19 +99,19 @@ class RolController extends Controller
     {
         $validar= Validator::make($request->all(), [
             'name' => "required|unique:rols",
-           
+
         ]);
 
         if(!$validar->fails()){
             $rol = Rol::find($id);
             if(isset($rol)){
                 $rol->name= $request->name;
-              
+
 
                 $rol->save();
                  return response()->json([
                 'res'=> true,
-                'mensaje' => 'Rol actualizado' 
+                'mensaje' => 'Rol actualizado'
             ]);
 
             }else{
