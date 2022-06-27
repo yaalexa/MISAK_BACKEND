@@ -113,7 +113,7 @@ Route::get('/buscar/{id}',[MaterialController::class,'buscar']);
 Route::post('/materials',[MaterialController::class,'store'])->middleware("auth:sanctum");
 Route::put('/materials/{id}',[MaterialController::class,'update'])->middleware("auth:sanctum");
 Route::delete('/materials/{id}',[MaterialController::class,'destroy'])->middleware("auth:sanctum");
-Route::get('/download/{id}',[MaterialController::class,'download']);
+Route::get('/download/{id}',[MaterialController::class,'download'])->middleware("auth:sanctum");
 Route::get('/search/{name}',[MaterialController::class,'buscarm']);
 Route::get('visualizacion',[MaterialController::class,'visualizacion'])->middleware("auth:sanctum");
 Route::get('buscarvisualizacion/{id}',[MaterialController::class,'buscarvisualizacion']);
