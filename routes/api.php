@@ -121,7 +121,7 @@ Route::get('buscarvisualizacion/{id}',[MaterialController::class,'buscarvisualiz
 //rutas de material_user
 Route::get('material__users',[Material_UserController::class,'index']);
 Route::get('material__users/{id}',[Material_UserController::class,'show']);
-Route::post('material__users',[Material_UserController::class,'store']);
+Route::post('material__users',[Material_UserController::class,'store'])->middleware("auth:sanctum");
 Route::put('material__users/{id}',[Material_UserController::class,'update']);
 Route::delete('material__users/{id}',[Material_UserController::class,'destroy']);
 Route::get('process__users/{id}',[Material_UserController::class,'proceso']);
