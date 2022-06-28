@@ -63,6 +63,7 @@ class Reporters_inicialController extends Controller
             )
             ->join('rols', 'users.rol_id', '=', 'rols.id')
             ->join('material__users', 'material__users.users_id', '=', 'users.id')
+            ->where('users.rol_id','=',4)
             ->groupBy('users.id','users.name')
             ->orderBy('users.id', 'asc')
             ->get();
