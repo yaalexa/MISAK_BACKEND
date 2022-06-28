@@ -58,12 +58,14 @@ class Reporters_inicialController extends Controller
             ->select(
                 'users.id',
                 'users.name',
-                DB::raw('sum(case when "material__users.material_id" "=" "visualizado" then 1 else 0 end) as visualizado'),
-                DB::raw('sum(case when "material__users.material_id" "=" "descargado" then 1 else 0 end) as descargado')
+                // DB::raw('sum(case when "material__users.material_id" "=" "visualizado" then 1 else 0 end) as visualizado'),
+                DB::raw('if("material__users.material_id" "=" "visualizado" ,1,null) as visualizado'),
+                DB::raw('if("material__users.material_id" "=" "descargado" ,1,null) as descargado'),
+                // DB::raw('sum(case when "material__users.material_id" "=" "descargado" then 1 else 0 end) as descargado')
             )
             ->join('rols', 'users.rol_id', '=', 'rols.id')
             ->join('material__users', 'material__users.users_id', '=', 'users.id')
-            ->where('users.rol_id','=',4)
+            // ->where('users.rol_id','=',4)
             ->groupBy('users.id','users.name')
             ->orderBy('users.id', 'asc')
             ->get();
