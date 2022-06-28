@@ -151,9 +151,9 @@ Route::get('ReportsDoc',[Reporters_inicialController::class,'ReportDoc']);
 Route::get('ReportsDetaDo',[Reporters_inicialController::class,'DetalleDo']);
 
 //Reportes PDF
-Route::get('Report_ViPDF',[ReportController::class,'Report_VIPDF']);
-Route::get('Report_DesPDF',[ReportController::class,'Report_DEPDF']);
-Route::get('Reports_DocPdf',[ReportController::class,'Report_DOVISPDF']);
+Route::get('Report_ViPDF/{fechai}/{fechaf}',[ReportController::class,'Report_VIPDF']);
+Route::get('Report_DesPDF/{fechai}/{fechaf}',[ReportController::class,'Report_DEPDF']);
+Route::get('Reports_DocPdf/{fechai}/{fechaf}',[ReportController::class,'Report_DOVISPDF']);
 Route::get('Reports_DocDePdf/{id}',[ReportController::class,'Report_DODEPDF']);
 Route::get('prueba',[ReportController::class,'generateReport']);
 
