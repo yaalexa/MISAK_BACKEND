@@ -117,13 +117,12 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         $validar= Validator::make($request->all(), [
-            "name" => "required|unique:users",
+            "name" => "required",
             "full_name" => "required",
             "document_type" => "required",
-            "document_number" => "required|unique:users",
-            "certificate_misak" => "required|unique:users",
-            "email" => "required|unique:users",
-            'password' => 'required|confirmed',
+            "document_number" => "required",
+            "certificate_misak" => "required",
+            "email" => "required",
             "rol_id" =>"required", //se agrego id rol y se borro de tabla roles
         ]);
 
@@ -136,9 +135,7 @@ class UserController extends Controller
                 $user->document_number = $request ->document_number;
                 $user->certificate_misak = $request ->certificate_misak;
                 $user->email = $request ->email;
-                $user->password = Hash::make($request->password);
                 $user->rol_id = $request->rol_id;
-
                 $user->save();
                  return response()->json([
                 'res'=> true,

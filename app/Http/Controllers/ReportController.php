@@ -26,42 +26,47 @@ class ReportController extends Controller
 
    
   
-  public function Report_VIPDF(){
+  public function Report_VIPDF($fecha_inicio,$fecha_final){
     $db = new ReportController();
     $jasper = new JasperPHP;
-    $jasper->compile(__DIR__ . '/../../../public/storage/report/reportvisualizado.jrxml')->execute();
-    $jasper->process(__DIR__ . '/../../../public/storage/report/reportvisualizado.jasper',
+    $jasper->compile(_DIR_ . '/../../../public/storage/report/reportvisualizado.jrxml')->execute();
+    $jasper->process(_DIR_ . '/../../../public/storage/report/reportvisualizado.jasper',
         false,
         ['pdf'],
-        [],
+        ["FechaInicio"=>$fecha_inicio,
+        "FechaFinal"=>$fecha_final],
         $db->getDatabaseconfig(),
+    )->execute();
+    $array = $jasper->list_parameters(_DIR_ . '/../../../public/storage/report/reportvisualizado.jasper'
     )->execute();
     $pathTofile = storage_path('/app/public/report/reportvisualizado.pdf');
     return response()->file($pathTofile);
 }
 
-public function Report_DEPDF(){
+public function Report_DEPDF($fecha_inicio,$fecha_final){
     $db = new ReportController();
     $jasper = new JasperPHP;
-    $jasper->compile(__DIR__ . '/../../../public/storage/report/reportdescargado.jrxml')->execute();
-    $jasper->process(__DIR__ . '/../../../public/storage/report/reportdescargado.jasper',
+    $jasper->compile(_DIR_ . '/../../../public/storage/report/reportdescargado.jrxml')->execute();
+    $jasper->process(_DIR_ . '/../../../public/storage/report/reportdescargado.jasper',
         false,
         ['pdf'],
-        [],
+        ["FechaInicio"=>$fecha_inicio,
+        "FechaFinal"=>$fecha_final],
         $db->getDatabaseconfig(),
     )->execute();
     $pathTofile = storage_path('/app/public/report/reportdescargado.pdf');
     return response()->file($pathTofile);
 
 }
-public function Report_DOVISPDF(){
+public function Report_DOVISPDF($fecha_inicio,$fecha_final){
     $db = new ReportController();
     $jasper = new JasperPHP;
-    $jasper->compile(__DIR__ . '/../../../public/storage/report/reportdocente.jrxml')->execute();
-    $jasper->process(__DIR__ . '/../../../public/storage/report/reportdocente.jasper',
+    $jasper->compile(_DIR_ . '/../../../public/storage/report/reportdocente.jrxml')->execute();
+    $jasper->process(_DIR_ . '/../../../public/storage/report/reportdocente.jasper',
         false,
         ['pdf'],
-        [],
+        ["FechaInicio"=>$fecha_inicio,
+        "FechaFinal"=>$fecha_final],
         $db->getDatabaseconfig(),
     )->execute();
     $pathTofile = storage_path('/app/public/report/reportdocente.pdf');
@@ -71,8 +76,8 @@ public function Report_DOVISPDF(){
 public function Report_DODEPDF($id_docente){
     $db = new ReportController();
     $jasper = new JasperPHP;
-    $jasper->compile(__DIR__ . '/../../../public/storage/report/reportdocentedetalle.jrxml')->execute();
-    $jasper->process(__DIR__ . '/../../../public/storage/report/reportdocentedetalle.jasper',
+    $jasper->compile(_DIR_ . '/../../../public/storage/report/reportdocentedetalle.jrxml')->execute();
+    $jasper->process(_DIR_ . '/../../../public/storage/report/reportdocentedetalle.jasper',
         false,
         ['pdf'],
         ["Id_Rol"=> $id_docente],
