@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use JasperPHP\JasperPHP ;
 
+
 class ReportController extends Controller
 {
     public function getDatabaseConfig()
@@ -54,7 +55,7 @@ public function Report_DEPDF($fecha_inicio,$fecha_final){
         "FechaFinal"=>$fecha_final],
         $db->getDatabaseconfig(),
     )->execute();
-    $pathTofile = storage_path('/app/public/report/reportdescargado.pdf');
+    $pathTofile = storage_path('app/public'). '/report/reportdescargado.pdf';
     return response()->file($pathTofile);
 
 }
@@ -69,9 +70,8 @@ public function Report_DOVISPDF($fecha_inicio,$fecha_final){
         "FechaFinal"=>$fecha_final],
         $db->getDatabaseconfig(),
     )->execute();
-    $pathTofile = storage_path('/app/public/report/reportdocente.pdf');
+    $pathTofile = storage_path('app/public'). '/report/reportdocente.pdf';
     return response()->file($pathTofile);
-
 }
 public function Report_DODEPDF($id_docente){
     $db = new ReportController();
@@ -83,9 +83,8 @@ public function Report_DODEPDF($id_docente){
         ["Id_Rol"=> $id_docente],
         $db->getDatabaseconfig(),
     )->execute();
-    $pathTofile = storage_path('/app/public/report/reportdocentedetalle.pdf');
+    $pathTofile = storage_path('app/public'). '/report/reportdocentedetalle.pdf';
     return response()->file($pathTofile);
-
 }
 
       
