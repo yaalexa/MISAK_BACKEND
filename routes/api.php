@@ -58,6 +58,7 @@ Route::group( ['middleware' => ["auth:sanctum"]], function(){
     //rutas
     Route::get('userprofile', [UserController::class, 'userProfile']);
     Route::get('logout', [UserController::class, 'logout']);
+    Route::put('/restablecer',[UserController::class,'restablecer']);
 });
 Route::get('users',[UserController::class,'index']); // con esta ruta puedo ver todos los usuarios
 Route::post('users',[UserController::class,'store']); //con esta ruta puedo registrar una nuevo usuario
