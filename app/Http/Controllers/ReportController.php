@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use JasperPHP\JasperPHP ;
 
+
 class ReportController extends Controller
 {
     public function getDatabaseConfig()
@@ -26,47 +27,51 @@ class ReportController extends Controller
 
    
   
-  public function Report_VIPDF(){
+  public function Report_VIPDF($fecha_inicio,$fecha_final){
     $db = new ReportController();
     $jasper = new JasperPHP;
     $jasper->compile(__DIR__ . '/../../../public/storage/report/reportvisualizado.jrxml')->execute();
     $jasper->process(__DIR__ . '/../../../public/storage/report/reportvisualizado.jasper',
         false,
         ['pdf'],
-        [],
+        ["FechaInicio"=>$fecha_inicio,
+        "FechaFinal"=>$fecha_final],
         $db->getDatabaseconfig(),
+    )->execute();
+    $array = $jasper->list_parameters(__DIR__ . '/../../../public/storage/report/reportvisualizado.jasper'
     )->execute();
     $pathTofile = storage_path('/app/public/report/reportvisualizado.pdf');
     return response()->file($pathTofile);
 }
 
-public function Report_DEPDF(){
+public function Report_DEPDF($fecha_inicio,$fecha_final){
     $db = new ReportController();
     $jasper = new JasperPHP;
     $jasper->compile(__DIR__ . '/../../../public/storage/report/reportdescargado.jrxml')->execute();
     $jasper->process(__DIR__ . '/../../../public/storage/report/reportdescargado.jasper',
         false,
         ['pdf'],
-        [],
+        ["FechaInicio"=>$fecha_inicio,
+        "FechaFinal"=>$fecha_final],
         $db->getDatabaseconfig(),
     )->execute();
-    $pathTofile = storage_path('/app/public/report/reportdescargado.pdf');
+    $pathTofile = storage_path('app/public'). '/report/reportdescargado.pdf';
     return response()->file($pathTofile);
 
 }
-public function Report_DOVISPDF(){
+public function Report_DOVISPDF($fecha_inicio,$fecha_final){
     $db = new ReportController();
     $jasper = new JasperPHP;
     $jasper->compile(__DIR__ . '/../../../public/storage/report/reportdocente.jrxml')->execute();
     $jasper->process(__DIR__ . '/../../../public/storage/report/reportdocente.jasper',
         false,
         ['pdf'],
-        [],
+        ["FechaInicio"=>$fecha_inicio,
+        "FechaFinal"=>$fecha_final],
         $db->getDatabaseconfig(),
     )->execute();
-    $pathTofile = storage_path('/app/public/report/reportdocente.pdf');
+    $pathTofile = storage_path('app/public'). '/report/reportdocente.pdf';
     return response()->file($pathTofile);
-
 }
 public function Report_DODEPDF($id_docente){
     $db = new ReportController();
@@ -78,9 +83,8 @@ public function Report_DODEPDF($id_docente){
         ["Id_Rol"=> $id_docente],
         $db->getDatabaseconfig(),
     )->execute();
-    $pathTofile = storage_path('/app/public/report/reportdocentedetalle.pdf');
+    $pathTofile = storage_path('app/public'). '/report/reportdocentedetalle.pdf';
     return response()->file($pathTofile);
-
 }
 
       

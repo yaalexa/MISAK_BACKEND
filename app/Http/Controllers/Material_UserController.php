@@ -45,10 +45,10 @@ class Material_UserController extends Controller
             
             $material_user->manejo_users = $request ->manejo_users;
             $material_user->detalle_material = $request ->detalle_material;
-            $material_user->date_download = $request ->date_download;
             $material_user->material_id = $request ->material_id;
             $material_user->users_id = $request ->users_id;
- 
+            $date = Carbon::now();
+            $material_user->date_download = $date->format('Y-m-d H:i:s');
             $material_user->save();
 
             return response()->json([
@@ -113,7 +113,7 @@ class Material_UserController extends Controller
                 $material_user->material_id = $request ->material_id;
                 $material_user->users_id = $request ->users_id;
 
-                $material->save();
+                $material_user->save();
                  return response()->json([
                 'res'=> true,
                 'mensaje' => 'material actualizado' 

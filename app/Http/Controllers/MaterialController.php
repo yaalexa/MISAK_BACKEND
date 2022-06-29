@@ -278,7 +278,7 @@ class MaterialController extends Controller
             ->orWhere('a.autores', 'like', '%' . $search . '%')
             ->orWhere('t.nivel', 'like', '%' . $search . '%')
             ->get();
-        return $visualizacion1;
+        return $visualizacion1; 
     }
     
   

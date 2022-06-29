@@ -135,4 +135,9 @@ class RolController extends Controller
             ]);
         }
     }
+    public function obtenerRols()
+    {
+        $rol =Rol::all();
+        return $rol;
+    }
 }
