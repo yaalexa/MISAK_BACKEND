@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Material_User;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
 
 
@@ -83,16 +84,25 @@ class Reporters_inicialController extends Controller
         $detalle = DB::table('users')
         ->select(
             'users.name',
-            'materials.name as material',
-            'materials.img',
-            'materials.isbn',
-            'material__users.detalle_material'
-            )
-        ->join('material_users', 'material__users.users_id', '=', 'users.id')
-        ->join('materials', 'material__users.material_id', '=', 'materials.id')
-        ->where('users.id', '=', $id)
+            'a.visualizado',
+            'b.descargado'
+        )
+        ->leftjoin(DB::raw("(select material__users.users_id as idu, count(material__users.id) as visualizado
+        from material__users
+        inner join users on users.id = material__users.users_id
+        where material__users.detalle_material = 'visualizado'
+        GROUP BY material__users.users_id) as a"), function ($join) {
+            $join->on("a.idu", "=", "users.id");
+        })
+        ->leftjoin(DB::raw("(select material__users.users_id as idd, count(material__users.id) as descargado
+        from material__users
+        inner join users on users.id = material__users.users_id
+        where material__users.detalle_material = 'descargado'
+        GROUP BY material__users.users_id) as b"), function ($join) {
+            $join->on("b.idd", "=", "users.id");
+        })
+        ->join ('rols', 'rols.id', '=', 'users.rol_id')
         ->get();
-
         return $detalle;
     }
 }
