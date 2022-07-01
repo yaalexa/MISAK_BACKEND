@@ -73,13 +73,13 @@ class MaterialController extends Controller
         if($result){
             return response()->json([
                 'res'=> true,
-                'mensaje' => 'material guardado' ,
+                'mensaje' => 'Material Guardado' ,
                 'ruta'=> url('storage/image/'.$material)
             ]);
         }else{
             return response()->json([
                 'res'=> false,
-                'mensaje' => 'error entrada duplicada' ,
+                'mensaje' => 'Error Entrada Duplicada' ,
                 'ruta' => null
             ]);
         }
@@ -119,7 +119,7 @@ class MaterialController extends Controller
         }else{
             return response()->json([
                 'res'=> false,
-                'mensaje' => 'registro no encontrado'
+                'mensaje' => 'Registro no Entrado'
             ]);
         }
     }
@@ -167,13 +167,13 @@ class MaterialController extends Controller
                 $material->save();
                  return response()->json([
                 'res'=> true,
-                'mensaje' => 'material actualizado' 
+                'mensaje' => 'Material Actualizado' 
             ]);
 
             }else{
                 return response()->json([
                     'res'=> false,
-                    'mensaje' => 'error al actualizar'
+                    'mensaje' => 'Error al Actualizar'
                 ]);
             }
         }else{

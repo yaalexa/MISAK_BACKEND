@@ -41,12 +41,12 @@ class EditorialController extends Controller
 
             return response()->json([
                 'res'=> true,
-                'mensaje' => 'editorial guardada' 
+                'mensaje' => 'Editorial Guardada' 
             ]);
         }else{
             return response()->json([
                 'res'=> false,
-                'mensaje' => 'error entrada duplicada' 
+                'mensaje' => 'Error Editorial Duplicada' 
             ]);
         }
     }
@@ -69,7 +69,7 @@ class EditorialController extends Controller
         }else{
             return response()->json([
                 'res'=> false,
-                'mensaje' => 'registro no encontrado' 
+                'mensaje' => 'Registro No Encontrado' 
             ]);
         }
     }
@@ -95,17 +95,18 @@ class EditorialController extends Controller
                 $editorial->save();
                  return response()->json([
                 'res'=> true,
-                'mensaje' => 'Editorial actualizada' 
+                'mensaje' => 'Editorial Actualizada' 
             ]);
 
             }else{
                 return response()->json([
                     'res'=> false,
-                    'mensaje' => 'error al actualizar'
+                    'mensaje' => 'Error al Actualizar'
                 ]);
             }
         }else{
-            return "entrada duplicada";
+            return "Entrada Duplicada";
+
         }
     }
 
@@ -122,12 +123,12 @@ class EditorialController extends Controller
             $editorial->delete();
             return response()->json([
                 'res'=> true,
-                'mensaje' => 'exito al elimar'
+                'mensaje' => 'Eliminar Editorial'
             ]);
         }else{
             return response()->json([
                 'res'=> false,
-                'mensaje' => 'falla al elimar no se encontro registro'
+                'mensaje' => 'Falla al Eliminar Editorial'
             ]);
         }
     }

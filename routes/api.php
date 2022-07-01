@@ -66,6 +66,7 @@ Route::put('users/{id}',[UserController::class,'update']); // con esta ruta pued
 Route::delete('users/{id}',[UserController::class,'destroy']); // con esta ruta puedo eliminar un usuario
 Route::put('users1/{id}',[UserController::class,'update1']); // con esta ruta puedo actualizar un usuario perfil
 Route::put('/restablecer',[UserController::class,'restablecer']);
+Route::get('/josue',[UserController::class,'sacarjosue']);
 //de esta forma nos genera todas las rutas
 
 Route::group(['middleware' => ["auth:sanctum"]], function () {

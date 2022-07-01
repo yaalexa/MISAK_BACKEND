@@ -41,12 +41,12 @@ class Educational_LevelController extends Controller
 
             return response()->json([
                 'res'=> true,
-                'mensaje' => 'Nivel de educacion creado' 
+                'mensaje' => 'Guardado con exito'  
             ]);
         }else{
             return response()->json([
                 'res'=> false,
-                'mensaje' => 'error entrada duplicada' 
+                'mensaje' => 'Error Entrada Duplicada'  
             ]);
         }
     }
@@ -95,17 +95,17 @@ class Educational_LevelController extends Controller
                 $educational_level->save();
                  return response()->json([
                 'res'=> true,
-                'mensaje' => 'Nivel de educacion actualizado' 
+                'mensaje' => 'Nivel de educacion Actualizado' 
             ]);
 
             }else{
                 return response()->json([
                     'res'=> false,
-                    'mensaje' => 'error al actualizar'
+                    'mensaje' => 'Error al Actualizar'
                 ]);
             }
         }else{
-            return "entrada duplicada";
+            return "Entrada Duplicada";
         }
     }
 

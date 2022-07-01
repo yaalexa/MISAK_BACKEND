@@ -48,7 +48,7 @@ class Author_MaterialController extends Controller
         }else{
             return response()->json([
                 'res'=> false,
-                'mensaje' => 'error entrada duplicada' 
+                'mensaje' => 'Error Entrada Duplicada' 
             ]);
         }
     }

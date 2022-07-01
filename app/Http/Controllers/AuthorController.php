@@ -30,13 +30,12 @@ class AuthorController extends Controller
     public function store(Request $request)
     {
         $validar= Validator::make($request->all(), [
-            'name' => 'required',
+            'name' => 'required|unique:authors',
             'address' => 'required',
             'phone' => 'required'
         ]); 
         if(!$validar ->fails()){
             $author = new Author();
-            
             $author->name = $request ->name;
             $author->address = $request ->address;
             $author->phone = $request ->phone;
@@ -45,12 +44,12 @@ class AuthorController extends Controller
 
             return response()->json([
                 'res'=> true,
-                'mensaje' => 'registro guardado' 
+                'mensaje' => 'Autor Guardado Correctamente' 
             ]);
             }else{
             return response()->json([
                 'res'=> false,
-                'mensaje' => 'error entrada duplicada' 
+                'mensaje' => 'Error Al Registrar El Autor' 
             ]);
         }
     }

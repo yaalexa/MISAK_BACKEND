@@ -32,12 +32,12 @@ class Material_EducationalController extends Controller
 
             return response()->json([
                 'res'=> true,
-                'mensaje' => 'Guardado con exito' 
+                'mensaje' => 'Guardado con exito'  
             ]);
         }else{
             return response()->json([
                 'res'=> false,
-                'mensaje' => 'error entrada duplicada' 
+                'mensaje' => 'Error Entrada Duplicada'  
             ]);
         }
     }
@@ -67,13 +67,13 @@ class Material_EducationalController extends Controller
                 $material_educational->save();
                  return response()->json([
                 'res'=> true,
-                'mensaje' => 'Se actualizado el registro' 
+                'mensaje' => 'Se Actualizado el Registro' 
             ]);
 
             }else{
                 return response()->json([
                     'res'=> false,
-                    'mensaje' => 'error al actualizar'
+                    'mensaje' => 'Error al Actualizar'
                 ]);
             }
         }else{

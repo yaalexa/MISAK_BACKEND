@@ -43,12 +43,12 @@ class RolController extends Controller
 
             return response()->json([
                 'res'=> true,
-                'mensaje' => 'Rol guardado' 
+                'mensaje' => 'Rol Guardado' 
             ]);
         }else{
             return response()->json([
                 'res'=> false,
-                'mensaje' => 'error entrada duplicada' 
+                'mensaje' => 'Error Entrada Duplicada' 
             ]);
         }
     }
@@ -71,7 +71,7 @@ class RolController extends Controller
         }else{
             return response()->json([
                 'res'=> false,
-                'mensaje' => 'registro no encontrado' 
+                'mensaje' => 'Registro No encontrado' 
             ]);
         }
     }
@@ -105,7 +105,7 @@ class RolController extends Controller
             }else{
                 return response()->json([
                     'res'=> false,
-                    'mensaje' => 'error al actualizar'
+                    'mensaje' => 'Error al Actualizar'
                 ]);
             }
         }else{

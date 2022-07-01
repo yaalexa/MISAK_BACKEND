@@ -16,7 +16,7 @@ class AreaController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    { 
+    {
         $area =Area::all();
         return $area;
     }
@@ -38,12 +38,12 @@ class AreaController extends Controller
             $area->save();
             return response()->json([
                 'res'=> true,
-                'mensaje' => 'area guardada' 
+                'mensaje' => 'Area Guardada'
             ]);
         }else{
             return response()->json([
                 'res'=> false,
-                'mensaje' => 'error entrada duplicada' 
+                'mensaje' => 'Error Area Duplicada'
             ]);
         }
     }
@@ -57,7 +57,7 @@ class AreaController extends Controller
     public function show( $id)
     {
         $area = Area::where('id',$id)->get();
-       
+
         return $area;
 
     }
@@ -83,17 +83,20 @@ class AreaController extends Controller
                 $area->save();
                  return response()->json([
                 'res'=> true,
-                'mensaje' => 'area actualizada' 
+                'mensaje' => 'Area Actualizada'
             ]);
 
             }else{
                 return response()->json([
                     'res'=> false,
-                    'mensaje' => 'error al actualizar'
+                    'mensaje' => 'Error al Actualizar'
                 ]);
             }
         }else{
-            return "entrada duplicada";
+            return response()->json([
+                'res'=> false,
+                'mensaje' => 'Error Area Duplicada!'
+            ]);
         }
     }
 
@@ -110,12 +113,12 @@ class AreaController extends Controller
             $area->delete();
             return response()->json([
                 'res'=> true,
-                'mensaje' => 'exito al eliminar'
+                'mensaje' => 'Area Eliminada'
             ]);
         }else{
             return response()->json([
                 'res'=> false,
-                'mensaje' => 'falla al elimar no se encontro registro'
+                'mensaje' => 'Error al Eliminar Area'
             ]);
         }
     }

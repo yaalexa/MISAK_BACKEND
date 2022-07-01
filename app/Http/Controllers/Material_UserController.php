@@ -209,6 +209,7 @@ class Material_UserController extends Controller
         ->get();
         
         return $visualizacion1;
+        
     }
     public function descarga()
     {

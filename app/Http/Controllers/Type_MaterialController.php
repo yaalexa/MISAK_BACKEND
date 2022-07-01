@@ -34,19 +34,17 @@ class Type_MaterialController extends Controller
         ]);
         if(!$validar ->fails()){
             $type_material = new Type_Material();
-            
             $type_material->name = $request ->name;
-
             $type_material->save();
 
             return response()->json([
                 'res'=> true,
-                'mensaje' => 'tipo de material guardado' 
+                'mensaje' => 'Tipo de Material Guardado' 
             ]);
         }else{
             return response()->json([
                 'res'=> false,
-                'mensaje' => 'error entrada duplicada' 
+                'mensaje' => 'Error Entrada Duplicada' 
             ]);
         }
     }
@@ -69,7 +67,7 @@ class Type_MaterialController extends Controller
         }else{
             return response()->json([
                 'res'=> false,
-                'mensaje' => 'registro no encontrado' 
+                'mensaje' => 'Registro No Encontrado' 
             ]);
         }
 
@@ -92,17 +90,16 @@ class Type_MaterialController extends Controller
             $type_material = Type_Material::find($id);
             if(isset($type_material)){
                 $type_material->name= $request->name;
-
                 $type_material->save();
                  return response()->json([
                 'res'=> true,
-                'mensaje' => 'tipo de material actualizado' 
+                'mensaje' => 'Tipo de Material Actualizado' 
             ]);
 
             }else{
                 return response()->json([
                     'res'=> false,
-                    'mensaje' => 'error al actualizar'
+                    'mensaje' => 'Error al Actualizar'
                 ]);
             }
         }else{

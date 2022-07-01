@@ -55,21 +55,28 @@ class Reporters_inicialController extends Controller
     public function ReportDoc()
     {
         $docente = DB::table('users')
-            ->select(
-                'users.id',
-                'users.name',
-                // DB::raw('sum(case when "material__users.material_id" "=" "visualizado" then 1 else 0 end) as visualizado'),
-                DB::raw('if("material__users.material_id" "=" "visualizado" ,1,null) as visualizado'),
-                DB::raw('if("material__users.material_id" "=" "descargado" ,1,null) as descargado'),
-                // DB::raw('sum(case when "material__users.material_id" "=" "descargado" then 1 else 0 end) as descargado')
-            )
-            ->join('rols', 'users.rol_id', '=', 'rols.id')
-            ->join('material__users', 'material__users.users_id', '=', 'users.id')
-            // ->where('users.rol_id','=',4)
-            ->groupBy('users.id','users.name')
-            ->orderBy('users.id', 'asc')
-            ->get();
-            return $docente;
+        ->select(
+            'users.name',
+            'a.visualizado',
+            'b.descargado'
+        )
+        ->leftjoin(DB::raw("(select material__users.users_id as idu, count(material__users.id) as visualizado
+        from material__users
+        inner join users on users.id = material__users.users_id
+        where material__users.detalle_material = 'visualizado'
+        GROUP BY material__users.users_id) as a"), function ($join) {
+            $join->on("a.idu", "=", "users.id");
+        })
+        ->leftjoin(DB::raw("(select material__users.users_id as idd, count(material__users.id) as descargado
+        from material__users
+        inner join users on users.id = material__users.users_id
+        where material__users.detalle_material = 'descargado'
+        GROUP BY material__users.users_id) as b"), function ($join) {
+            $join->on("b.idd", "=", "users.id");
+        })
+        ->join ('rols', 'rols.id', '=', 'users.rol_id')
+        ->get();
+        return $docente;
     }
 
     public function DetalleDo($id){

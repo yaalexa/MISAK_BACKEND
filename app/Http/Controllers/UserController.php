@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Crypt;
 
 
@@ -19,8 +20,8 @@ class UserController extends Controller
             'full_name' => 'required',
             'email' => 'required|email|unique:users',
             'password' => 'required|confirmed',
-            'rol_id' => 'required' , 
-                   
+            'rol_id' => 'required' ,
+
         ]);
 
         $user = new User();
@@ -33,12 +34,13 @@ class UserController extends Controller
         $user->password = Hash::make($request->password);
         $user->rol_id = $request->rol_id;
         $user->save();
-        
+
 
         return response()->json([
             "status" => 1,
-            "msg" => "¡Registro de usuario exitoso!",
-        ]);    
+            "res" => true,
+            "mensaje" => "¡Registro de usuario exitoso!",
+        ]);
     }
 
 
@@ -64,19 +66,19 @@ class UserController extends Controller
                     "usr_id" => $user->id,
                     "rol_id" => $user->rol_id,
                     "usr_name" => $user->name,
-                ]);        
+                ]);
             }else{
                 return response()->json([
                     "status" => 0,
                     "msg" => "password incorrecto",
-                ]);    
+                ]);
             }
 
         }else{
             return response()->json([
                 "status" => 0,
                 "msg" => "Usuario no registrado",
-            ]);  
+            ]);
         }
     }
 
@@ -85,22 +87,22 @@ class UserController extends Controller
             "status" => 0,
             "msg" => "Acerca del perfil de usuario",
             "data" => auth()->user()
-        ]); 
+        ]);
     }
- 
+
     public function logout() {
         auth()->user()->tokens()->delete();
-        
+
         return response()->json([
             "status" => 1,
-            "msg" => "Cierre de Sesión",            
-        ]); 
+            "msg" => "Cierre de Sesión",
+        ]);
     }
     public function show($id)
     {
         $user = User::where('id',$id) ->get();
        return $user;
-    
+
     }
     public function index()
     {
@@ -139,17 +141,20 @@ class UserController extends Controller
                 $user->save();
                  return response()->json([
                 'res'=> true,
-                'mensaje' => 'Usuario actualizado' 
+                'mensaje' => 'Usuario actualizado correctamente'
             ]);
 
             }else{
                 return response()->json([
                     'res'=> false,
-                    'mensaje' => 'error al actualizar'
+                    'mensaje' => 'error al actualizar!'
                 ]);
             }
         }else{
-            return "entrada duplicada";
+            return response()->json([
+                'res'=> false,
+                'mensaje' => 'Entrada duplicada!'
+            ]);
         }
     }
 
@@ -187,7 +192,7 @@ class UserController extends Controller
                 $correo->password = Hash::make($request->newpassword);
                 $correo->save();
                 return response()->json([
-                    'mensaje'=>"Se actualizo la contraseña"
+                    'mensaje'=>"Se actualizo la contraseña correctamente"
                 ]);
             }else{
                 return response()->json([
@@ -245,5 +250,30 @@ class UserController extends Controller
         }else{
             return "entrada duplicada";
         }
+    }
+    function sacarjosue(){
+        $docente =  DB::table('users')->select(
+            'users.id',
+            'users.name',
+            'a.visualizado',
+            'b.descargado'
+        )
+        ->leftjoin(DB::raw("(select material__users.users_id as idu, count(material__users.id) as visualizado
+        from material__users
+        inner join users on users.id = material__users.users_id
+        where material__users.detalle_material = 'visualizado'
+        GROUP BY material__users.users_id) as a"), function ($join) {
+            $join->on("a.idu", "=", "users.id");
+        })
+        ->leftjoin(DB::raw("(select material__users.users_id as idd, count(material__users.id) as descargado
+        from material__users
+        inner join users on users.id = material__users.users_id
+        where material__users.detalle_material = 'visbalizado'
+        GROUP BY material__users.users_id) as b"), function ($join) {
+            $join->on("b.idd", "=", "users.id");
+        })
+        ->join ('rols', 'rols.id', '=', 'users.rol_id')
+        ->get();
+        return $docente;
     }
 }
