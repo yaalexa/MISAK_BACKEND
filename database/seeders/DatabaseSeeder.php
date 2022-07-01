@@ -25,16 +25,16 @@ class DatabaseSeeder extends Seeder
     {
        // \App\Models\User::factory(10)->create();
        $this->call(Roltable::class);
-       User::factory(10)->create();
-       Type_Material::factory(8)->create();
-       Editorial::factory(15)->create();
-       Areas::factory(6)->create();
-       Educational_level::factory(6)->create();
-       Author::factory(6)->create();
-       Material::factory(16)->create();
-       Author_Material::factory(16)->create();
-       Material_Educational_level::factory(16)->create();
-       Material_User::factory(26)->create();
+    //    User::factory(1)->create();
+    //    Type_Material::factory(8)->create();
+    //    Editorial::factory(15)->create();
+    //    Areas::factory(6)->create();
+    //    Educational_level::factory(6)->create();
+    //    Author::factory(6)->create();
+    //    Material::factory(16)->create();
+    //    Author_Material::factory(16)->create();
+    //    Material_Educational_level::factory(16)->create();
+    //    Material_User::factory(26)->create();
        $this->call(UserSeeder::class);
     }
 }
